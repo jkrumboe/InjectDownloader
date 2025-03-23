@@ -19,7 +19,7 @@ if (typeof init === "undefined") {
                     text-align: right;
                 }
                 .learnweb-downloader-top-button button {
-                    background-color: #1976d2;
+                    background-color: #2B6581;
                     color: white;
                     border: none;
                     border-radius: 4px;
@@ -32,7 +32,7 @@ if (typeof init === "undefined") {
                     transition: background-color 0.2s;
                 }
                 .learnweb-downloader-top-button button:hover {
-                    background-color: #1565c0;
+                    background-color: #1A3E4F;
                 }
                 .learnweb-downloader-fab-container {
                     position: fixed;
@@ -47,7 +47,7 @@ if (typeof init === "undefined") {
                     width: 56px;
                     height: 56px;
                     border-radius: 50%;
-                    background-color: #1976d2;
+                    background-color: #2B6581;
                     color: white;
                     display: flex;
                     align-items: center;
@@ -58,7 +58,7 @@ if (typeof init === "undefined") {
                     border: none;
                 }
                 .learnweb-downloader-fab:hover {
-                    background-color: #1565c0;
+                    background-color: #1A3E4F;
                     transform: scale(1.05);
                 }
                 .learnweb-downloader-fab-tooltip {
@@ -78,8 +78,8 @@ if (typeof init === "undefined") {
                     opacity: 1;
                 }
                 .learnweb-downloader-section-button {
-                    background-color: #f5f5f5;
-                    border: 1px solid #ddd;
+                    background-color: #2e2e2e;
+                    border: 1px solid #444;
                     border-radius: 4px;
                     padding: 5px 10px;
                     font-size: 13px;
@@ -90,7 +90,7 @@ if (typeof init === "undefined") {
                     transition: all 0.2s;
                 }
                 .learnweb-downloader-section-button:hover {
-                    background-color: #e0e0e0;
+                    background-color: #444;
                 }
                 .learnweb-downloader-section-button svg {
                     margin-right: 5px;
@@ -101,7 +101,7 @@ if (typeof init === "undefined") {
                     position: fixed;
                     bottom: 20px;
                     left: 20px;
-                    background-color: white;
+                    background-color: #1e1e1e;
                     border-radius: 8px;
                     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
                     padding: 12px 16px;
@@ -124,6 +124,7 @@ if (typeof init === "undefined") {
                 .learnweb-downloader-progress-toast-title {
                     font-weight: 600;
                     font-size: 14px;
+                    color: white;
                 }
                 .learnweb-downloader-progress-toast-close {
                     background: none;
@@ -136,14 +137,14 @@ if (typeof init === "undefined") {
                 }
                 .learnweb-downloader-progress-bar {
                     height: 6px;
-                    background-color: #e0e0e0;
+                    background-color: #444;
                     border-radius: 3px;
                     margin: 5px 0;
                     overflow: hidden;
                 }
                 .learnweb-downloader-progress-bar-inner {
                     height: 100%;
-                    background-color: #1976d2;
+                    background-color: #2B6581;
                     width: 0%;
                     transition: width 0.3s;
                 }
@@ -160,14 +161,14 @@ if (typeof init === "undefined") {
                     top: 50%;
                     left: 50%;
                     transform: translate(-50%, -50%);
-                    background-color: white;
+                    background-color: #1e1e1e;
                     border-radius: 12px;
                     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
                     padding: 24px;
                     z-index: 10001;
                     width: 90%;
-                    max-width: 600px;
-                    max-height: 80vh;
+                    max-width: 650px;
+                    max-height: 60vh;
                     display: none;
                     flex-direction: column;
                     transition: opacity 0.3s ease, transform 0.3s ease;
@@ -187,13 +188,13 @@ if (typeof init === "undefined") {
                     align-items: center;
                     margin-bottom: 20px;
                     padding-bottom: 16px;
-                    border-bottom: 1px solid #e0e0e0;
+                    border-bottom: 1px solid #444;
                 }
 
                 .learnweb-downloader-file-selector-title {
                     font-weight: 600;
                     font-size: 20px;
-                    color: #333;
+                    color: white;
                 }
 
                 .learnweb-downloader-file-selector-close {
@@ -208,7 +209,7 @@ if (typeof init === "undefined") {
                 }
 
                 .learnweb-downloader-file-selector-close:hover {
-                    color: #333;
+                    color: white;
                 }
 
                 .learnweb-downloader-file-selector-content {
@@ -220,7 +221,7 @@ if (typeof init === "undefined") {
 
                 .learnweb-downloader-file-selector-section {
                     margin-bottom: 20px;
-                    background-color: #f9f9f9;
+                    background-color: #2e2e2e;
                     border-radius: 8px;
                     padding: 16px;
                     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
@@ -231,13 +232,37 @@ if (typeof init === "undefined") {
                     align-items: center;
                     margin-bottom: 12px;
                     font-weight: 500;
-                    color: #444;
+                    color: white;
+                    cursor: pointer; 
+                    justify-content: space-between; 
+                }
+
+                .learnweb-downloader-file-selector-section-header .toggle-icon {
+                    margin-left: 10px;
+                    transition: transform 0.2s ease;
+                }
+
+                .learnweb-downloader-file-selector-section-header.collapsed .toggle-icon {
+                    transform: rotate(-90deg); /* Rotate the icon when collapsed */
+                }
+
+                .learnweb-downloader-file-selector-section-content {
+                    margin-top: 10px;
+                    overflow: hidden;
+                    transition: max-height 0.3s ease, opacity 0.3s ease;
+                    max-height: 500px; /* Adjust based on your content */
+                    opacity: 1;
+                }
+
+                .learnweb-downloader-file-selector-section-content.collapsed {
+                    max-height: 0;
+                    opacity: 0;
                 }
 
                 .learnweb-downloader-file-selector-section-toggle {
                     margin-left: 8px;
                     font-size: 14px;
-                    color: #1976d2;
+                    color: #2B6581;
                     cursor: pointer;
                     background: none;
                     border: none;
@@ -247,8 +272,8 @@ if (typeof init === "undefined") {
                 }
 
                 .learnweb-downloader-file-selector-section-toggle:hover {
-                    background-color: #e3f2fd;
-                    color: #1565c0;
+                    background-color: #1A3E4F;
+                    color: white;
                 }
 
                 .learnweb-downloader-file-selector-file {
@@ -256,8 +281,8 @@ if (typeof init === "undefined") {
                     align-items: center;
                     padding: 8px 0;
                     margin-left: 20px;
-                    border-bottom: 1px solid #eee;
-                    color: #333;
+                    border-bottom: 1px solid #444;
+                    color: white;
                 }
 
                 .learnweb-downloader-file-selector-file:last-child {
@@ -273,27 +298,24 @@ if (typeof init === "undefined") {
                     display: flex;
                     justify-content: space-between;
                     padding-top: 16px;
-                    border-top: 1px solid #e0e0e0;
+                    border-top: 1px solid #444;
                 }
 
                 .learnweb-downloader-file-selector-select-all {
                     background: none;
                     border: none;
-                    color: #1976d2;
+                    color: white;
+                    background-color: #1A3E4F;
                     cursor: pointer;
                     padding: 8px 12px;
                     font-size: 14px;
                     border-radius: 4px;
+                    margin-right: 8px;
                     transition: background-color 0.2s, color 0.2s;
                 }
 
-                .learnweb-downloader-file-selector-select-all:hover {
-                    background-color: #e3f2fd;
-                    color: #1565c0;
-                }
-
                 .learnweb-downloader-file-selector-download {
-                    background-color: #1976d2;
+                    background-color: #4199C1;
                     color: white;
                     border: none;
                     border-radius: 4px;
@@ -304,7 +326,7 @@ if (typeof init === "undefined") {
                 }
 
                 .learnweb-downloader-file-selector-download:hover {
-                    background-color: #1565c0;
+                    background-color: #1A3E4F;
                 }
                 .learnweb-downloader-overlay {
                     position: fixed;
@@ -322,13 +344,13 @@ if (typeof init === "undefined") {
                 .learnweb-downloader-mini-progress {
                     width: 50px;
                     height: 5px;
-                    background-color: #e0e0e0;
+                    background-color: #444;
                     border-radius: 2px;
                     overflow: hidden;
                 }
                 .learnweb-downloader-mini-progress-inner {
                     height: 100%;
-                    background-color: #4caf50;
+                    background-color: #03dac6;
                     width: 0%;
                 }
             </style>
@@ -393,21 +415,21 @@ if (typeof init === "undefined") {
     const fileSelector = document.createElement("div")
     fileSelector.className = "learnweb-downloader-file-selector"
     fileSelector.innerHTML = `
-            <div class="learnweb-downloader-file-selector-header">
-                <div class="learnweb-downloader-file-selector-title">Select Files to Download</div>
-                <button class="learnweb-downloader-file-selector-close">&times;</button>
-            </div>
-            <div class="learnweb-downloader-file-selector-content" id="fileSelectorContent">
-                <!-- Sections and files will be populated here -->
-            </div>
-            <div class="learnweb-downloader-file-selector-actions">
-                <div>
-                    <button class="learnweb-downloader-file-selector-select-all" id="selectAllFiles">Select All</button>
-                    <button class="learnweb-downloader-file-selector-select-all" id="deselectAllFiles">Deselect All</button>
-                </div>
-                <button class="learnweb-downloader-file-selector-download" id="downloadSelectedFiles">Download Selected</button>
-            </div>
-        `
+        <div class="learnweb-downloader-file-selector-header">
+          <div class="learnweb-downloader-file-selector-title">Select Files to Download</div>
+          <div class="learnweb-downloader-file-selector-actions">
+            <button class="learnweb-downloader-file-selector-select-all" id="selectAllFiles">Select All</button>
+            <button class="learnweb-downloader-file-selector-select-all" id="deselectAllFiles">Deselect All</button>
+          </div>
+          <button class="learnweb-downloader-file-selector-close">&times;</button>
+        </div>
+        <div class="learnweb-downloader-file-selector-content" id="fileSelectorContent">
+          <!-- Sections and files will be populated here -->
+        </div>
+        <div class="learnweb-downloader-file-selector-actions">
+          <button class="learnweb-downloader-file-selector-download" id="downloadSelectedFiles">Download Selected</button>
+        </div>
+      `
     document.body.appendChild(fileSelector)
 
     // Create background overlay
@@ -481,101 +503,117 @@ if (typeof init === "undefined") {
 
     // Function to show file selector with specified sections (or all if not specified)
     function showFileSelector(sectionsToShow = null) {
-      const fileSelectorContent = document.getElementById("fileSelectorContent")
-      fileSelectorContent.innerHTML = ""
-
-      const sections = sectionsToShow || Object.keys(sectionFiles)
-
+      const fileSelectorContent = document.getElementById("fileSelectorContent");
+      fileSelectorContent.innerHTML = "";
+  
+      const sections = sectionsToShow || Object.keys(sectionFiles);
+  
       sections.forEach((sectionTitle) => {
-        const files = sectionFiles[sectionTitle]
-        if (!files || files.length === 0) return
-
-        const sectionElement = document.createElement("div")
-        sectionElement.className = "learnweb-downloader-file-selector-section"
-
-        const sectionHeader = document.createElement("div")
-        sectionHeader.className = "learnweb-downloader-file-selector-section-header"
-
-        const sectionCheckbox = document.createElement("input")
-        sectionCheckbox.type = "checkbox"
-        sectionCheckbox.className = "learnweb-downloader-file-checkbox"
-        sectionCheckbox.dataset.section = sectionTitle
-
-        const sectionLabel = document.createElement("span")
-        sectionLabel.textContent = sectionTitle
-
-        const selectAllButton = document.createElement("button")
-        selectAllButton.className = "learnweb-downloader-file-selector-section-toggle"
-        selectAllButton.textContent = "Select All"
-        selectAllButton.addEventListener("click", () => {
-          const checkboxes = sectionElement.querySelectorAll('input[type="checkbox"]')
-          checkboxes.forEach((cb) => (cb.checked = true))
-        })
-
-        const deselectAllButton = document.createElement("button")
-        deselectAllButton.className = "learnweb-downloader-file-selector-section-toggle"
-        deselectAllButton.textContent = "Deselect All"
-        deselectAllButton.addEventListener("click", () => {
-          const checkboxes = sectionElement.querySelectorAll('input[type="checkbox"]')
-          checkboxes.forEach((cb) => (cb.checked = false))
-        })
-
-        sectionHeader.appendChild(sectionCheckbox)
-        sectionHeader.appendChild(sectionLabel)
-        sectionHeader.appendChild(selectAllButton)
-        sectionHeader.appendChild(deselectAllButton)
-        sectionElement.appendChild(sectionHeader)
-
-        // Add event listener to section checkbox to toggle all files in the section
-        sectionCheckbox.addEventListener("change", () => {
-          const fileCheckboxes = sectionElement.querySelectorAll(
-            '.learnweb-downloader-file-selector-file input[type="checkbox"]',
-          )
-          fileCheckboxes.forEach((checkbox) => {
-            checkbox.checked = sectionCheckbox.checked
-          })
-        })
-
-        // Add files
-        files.forEach((file) => {
-          const fileElement = document.createElement("div")
-          fileElement.className = "learnweb-downloader-file-selector-file"
-
-          const fileCheckbox = document.createElement("input")
-          fileCheckbox.type = "checkbox"
-          fileCheckbox.className = "learnweb-downloader-file-checkbox"
-          fileCheckbox.dataset.url = file.url
-          fileCheckbox.dataset.filename = file.filename
-          fileCheckbox.dataset.section = file.section
-          fileCheckbox.checked = true // Default to checked
-
-          const fileLabel = document.createElement("span")
-          fileLabel.textContent = file.filename
-
-          fileElement.appendChild(fileCheckbox)
-          fileElement.appendChild(fileLabel)
-          sectionElement.appendChild(fileElement)
-
-          // Add event listener to update section checkbox state
-          fileCheckbox.addEventListener("change", () => {
-            const fileCheckboxes = sectionElement.querySelectorAll(
-              '.learnweb-downloader-file-selector-file input[type="checkbox"]',
-            )
-            const allChecked = Array.from(fileCheckboxes).every((cb) => cb.checked)
-            const someChecked = Array.from(fileCheckboxes).some((cb) => cb.checked)
-
-            sectionCheckbox.checked = someChecked
-            sectionCheckbox.indeterminate = someChecked && !allChecked
-          })
-        })
-
-        fileSelectorContent.appendChild(sectionElement)
-      })
-
+          const files = sectionFiles[sectionTitle];
+          if (!files || files.length === 0) return;
+  
+          const sectionElement = document.createElement("div");
+          sectionElement.className = "learnweb-downloader-file-selector-section";
+  
+          const sectionHeader = document.createElement("div");
+          sectionHeader.className = "learnweb-downloader-file-selector-section-header";
+  
+          const sectionCheckbox = document.createElement("input");
+          sectionCheckbox.type = "checkbox";
+          sectionCheckbox.className = "learnweb-downloader-file-checkbox";
+          sectionCheckbox.dataset.section = sectionTitle;
+  
+          const sectionLabel = document.createElement("span");
+          sectionLabel.textContent = sectionTitle;
+  
+          const toggleIcon = document.createElement("span");
+          toggleIcon.className = "toggle-icon";
+          toggleIcon.innerHTML = "&#9660;"; // Down arrow icon
+  
+          const selectAllButton = document.createElement("button");
+          selectAllButton.className = "learnweb-downloader-file-selector-section-toggle";
+          selectAllButton.textContent = "Select All";
+          selectAllButton.addEventListener("click", () => {
+              const checkboxes = sectionElement.querySelectorAll('input[type="checkbox"]');
+              checkboxes.forEach((cb) => (cb.checked = true));
+          });
+  
+          const deselectAllButton = document.createElement("button");
+          deselectAllButton.className = "learnweb-downloader-file-selector-section-toggle";
+          deselectAllButton.textContent = "Deselect All";
+          deselectAllButton.addEventListener("click", () => {
+              const checkboxes = sectionElement.querySelectorAll('input[type="checkbox"]');
+              checkboxes.forEach((cb) => (cb.checked = false));
+          });
+  
+          sectionHeader.appendChild(sectionCheckbox);
+          sectionHeader.appendChild(sectionLabel);
+          sectionHeader.appendChild(toggleIcon);
+          sectionHeader.appendChild(selectAllButton);
+          sectionHeader.appendChild(deselectAllButton);
+          sectionElement.appendChild(sectionHeader);
+  
+          // Add event listener to section checkbox to toggle all files in the section
+          sectionCheckbox.addEventListener("change", () => {
+              const fileCheckboxes = sectionElement.querySelectorAll(
+                  '.learnweb-downloader-file-selector-file input[type="checkbox"]',
+              );
+              fileCheckboxes.forEach((checkbox) => {
+                  checkbox.checked = sectionCheckbox.checked;
+              });
+          });
+  
+          // Create a container for the files in this section
+          const sectionContent = document.createElement("div");
+          sectionContent.className = "learnweb-downloader-file-selector-section-content";
+  
+          // Add files
+          files.forEach((file) => {
+              const fileElement = document.createElement("div");
+              fileElement.className = "learnweb-downloader-file-selector-file";
+  
+              const fileCheckbox = document.createElement("input");
+              fileCheckbox.type = "checkbox";
+              fileCheckbox.className = "learnweb-downloader-file-checkbox";
+              fileCheckbox.dataset.url = file.url;
+              fileCheckbox.dataset.filename = file.filename;
+              fileCheckbox.dataset.section = file.section;
+              fileCheckbox.checked = true; // Default to checked
+  
+              const fileLabel = document.createElement("span");
+              fileLabel.textContent = file.filename;
+  
+              fileElement.appendChild(fileCheckbox);
+              fileElement.appendChild(fileLabel);
+              sectionContent.appendChild(fileElement);
+  
+              // Add event listener to update section checkbox state
+              fileCheckbox.addEventListener("change", () => {
+                  const fileCheckboxes = sectionElement.querySelectorAll(
+                      '.learnweb-downloader-file-selector-file input[type="checkbox"]',
+                  );
+                  const allChecked = Array.from(fileCheckboxes).every((cb) => cb.checked);
+                  const someChecked = Array.from(fileCheckboxes).some((cb) => cb.checked);
+  
+                  sectionCheckbox.checked = someChecked;
+                  sectionCheckbox.indeterminate = someChecked && !allChecked;
+              });
+          });
+  
+          sectionElement.appendChild(sectionContent);
+          fileSelectorContent.appendChild(sectionElement);
+  
+          // Add click event to the section header to toggle collapse/expand
+          sectionHeader.addEventListener("click", () => {
+              sectionHeader.classList.toggle("collapsed");
+              sectionContent.classList.toggle("collapsed");
+          });
+      });
+  
       // Show the file selector and overlay
-      fileSelector.classList.add("active")
-      overlay.classList.add("active")
-    }
+      fileSelector.classList.add("active");
+      overlay.classList.add("active");
+  }
 
     // Function to close file selector
     function closeFileSelector() {
