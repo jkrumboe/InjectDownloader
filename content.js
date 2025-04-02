@@ -13,27 +13,13 @@ if (typeof init === "undefined") {
     const downloadAllContainer = document.createElement("div")
     downloadAllContainer.className = "learnweb-downloader-top-button"
     downloadAllContainer.innerHTML = `
-            <style>
+                        <style>
+                /* Main Button Styles */
                 .learnweb-downloader-top-button {
                     margin: 15px 0;
                     text-align: right;
                 }
-                .learnweb-downloader-top-button button {
-                    background-color: #2B6581;
-                    color: white;
-                    border: none;
-                    border-radius: 4px;
-                    padding: 8px 16px;
-                    font-size: 14px;
-                    cursor: pointer;
-                    display: inline-flex;
-                    align-items: center;
-                    gap: 8px;
-                    transition: background-color 0.2s;
-                }
-                .learnweb-downloader-top-button button:hover {
-                    background-color: #1A3E4F;
-                }
+                
                 .learnweb-downloader-fab-container {
                     position: fixed;
                     bottom: 20px;
@@ -77,281 +63,386 @@ if (typeof init === "undefined") {
                 .learnweb-downloader-fab:hover .learnweb-downloader-fab-tooltip {
                     opacity: 1;
                 }
-                .learnweb-downloader-section-button {
-                    background-color: #2e2e2e;
-                    border: 1px solid #444;
-                    border-radius: 4px;
-                    padding: 5px 10px;
-                    font-size: 13px;
+                
+                .learnweb-downloader-top-button button {
+                    background-color: #2B6581;
+                    color: white;
+                    border: none;
+                    border-radius: 6px;
+                    padding: 10px 18px;
+                    font-size: 14px;
                     cursor: pointer;
                     display: inline-flex;
                     align-items: center;
-                    margin-left: 10px;
-                    transition: all 0.2s;
+                    gap: 8px;
+                    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+                    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
                 }
-                .learnweb-downloader-section-button:hover {
-                    background-color: #444;
+                
+                .learnweb-downloader-top-button button:hover {
+                    background-color: #1A3E4F;
+                    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+                    transform: translateY(-1px);
                 }
-                .learnweb-downloader-section-button svg {
-                    margin-right: 5px;
-                    width: 16px;
-                    height: 16px;
-                }
-                .learnweb-downloader-progress-toast {
-                    position: fixed;
-                    bottom: 20px;
-                    left: 20px;
-                    background-color: #1e1e1e;
-                    border-radius: 8px;
-                    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-                    padding: 12px 16px;
-                    z-index: 10000;
-                    max-width: 350px;
-                    display: flex;
-                    flex-direction: column;
-                    transform: translateY(150%);
-                    transition: transform 0.3s ease-out;
-                }
-                .learnweb-downloader-progress-toast.active {
+                
+                .learnweb-downloader-top-button button:active {
                     transform: translateY(0);
                 }
-                .learnweb-downloader-progress-toast-header {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    margin-bottom: 10px;
-                }
-                .learnweb-downloader-progress-toast-title {
-                    font-weight: 600;
-                    font-size: 14px;
-                    color: white;
-                }
-                .learnweb-downloader-progress-toast-close {
-                    background: none;
-                    border: none;
-                    cursor: pointer;
-                    color: #666;
-                    padding: 0;
-                    font-size: 18px;
-                    line-height: 1;
-                }
-                .learnweb-downloader-progress-bar {
-                    height: 6px;
-                    background-color: #444;
-                    border-radius: 3px;
-                    margin: 5px 0;
-                    overflow: hidden;
-                }
-                .learnweb-downloader-progress-bar-inner {
-                    height: 100%;
-                    background-color: #2B6581;
-                    width: 0%;
-                    transition: width 0.3s;
-                }
-                .learnweb-downloader-progress-text {
-                    font-size: 12px;
-                    color: #666;
-                    margin-top: 5px;
-                }
-                .learnweb-downloader-file-checkbox {
-                    margin-right: 8px;
-                }
+                
+                /* File Selector Modal */
                 .learnweb-downloader-file-selector {
                     position: fixed;
                     top: 50%;
                     left: 50%;
-                    transform: translate(-50%, -50%);
-                    background-color: #1e1e1e;
-                    border-radius: 12px;
-                    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+                    transform: translate(-50%, -50%) scale(0.95);
+                    background-color: #252525;
+                    border-radius: 16px;
+                    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
                     padding: 24px;
                     z-index: 10001;
                     width: 90%;
-                    max-width: 650px;
-                    max-height: 60vh;
+                    height: 55vh;
+                    max-width: 700px;
+                    max-height: 80vh;
                     display: none;
                     flex-direction: column;
-                    transition: opacity 0.3s ease, transform 0.3s ease;
                     opacity: 0;
-                    transform: translate(-50%, -50%) scale(0.9);
+                    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                    border: 1px solid #3a3a3a;
                 }
-
+                
                 .learnweb-downloader-file-selector.active {
                     display: flex;
                     opacity: 1;
                     transform: translate(-50%, -50%) scale(1);
                 }
-
+                
+                /* Header */
                 .learnweb-downloader-file-selector-header {
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
                     margin-bottom: 20px;
                     padding-bottom: 16px;
-                    border-bottom: 1px solid #444;
+                    border-bottom: 1px solid #3a3a3a;
                 }
-
+                
                 .learnweb-downloader-file-selector-title {
                     font-weight: 600;
-                    font-size: 20px;
+                    font-size: 22px;
                     color: white;
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
                 }
-
+                
+                .learnweb-downloader-file-selector-title svg {
+                    width: 20px;
+                    height: 20px;
+                }
+                
                 .learnweb-downloader-file-selector-close {
                     background: none;
                     border: none;
                     cursor: pointer;
-                    color: #666;
-                    padding: 0;
+                    color: #888;
+                    padding: 4px;
                     font-size: 24px;
                     line-height: 1;
-                    transition: color 0.2s;
+                    transition: all 0.2s;
+                    border-radius: 4px;
                 }
-
+                
                 .learnweb-downloader-file-selector-close:hover {
                     color: white;
+                    background-color: rgba(255,255,255,0.1);
                 }
-
+                
+                /* Content Area */
                 .learnweb-downloader-file-selector-content {
+                    height: 100%;
                     overflow-y: auto;
-                    max-height: calc(80vh - 150px);
+                    max-height: calc(70vh - 180px);
+                    padding-right: 12px;
                     margin-bottom: 20px;
-                    padding-right: 8px;
+                    scrollbar-width: thin;
+                    scrollbar-color: #3a3a3a #252525;
                 }
-
+                
+                .learnweb-downloader-file-selector-content::-webkit-scrollbar {
+                    width: 8px;
+                }
+                
+                .learnweb-downloader-file-selector-content::-webkit-scrollbar-track {
+                    background: #252525;
+                    border-radius: 4px;
+                }
+                
+                .learnweb-downloader-file-selector-content::-webkit-scrollbar-thumb {
+                    background-color: #3a3a3a;
+                    border-radius: 4px;
+                }
+                
+                /* Sections */
                 .learnweb-downloader-file-selector-section {
-                    margin-bottom: 20px;
+                    margin-bottom: 16px;
                     background-color: #2e2e2e;
-                    border-radius: 8px;
-                    padding: 16px;
-                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+                    border-radius: 10px;
+                    padding: 0;
+                    overflow: hidden;
+                    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+                    border: 1px solid #3a3a3a;
                 }
-
+                
                 .learnweb-downloader-file-selector-section-header {
                     display: flex;
                     align-items: center;
-                    margin-bottom: 12px;
+                    justify-content: space-between;
+                    padding: 14px 16px;
                     font-weight: 500;
                     color: white;
-                    cursor: pointer; 
-                    justify-content: space-between; 
+                    cursor: pointer;
+                    transition: background-color 0.2s;
                 }
-
-                .learnweb-downloader-file-selector-section-header .toggle-icon {
-                    margin-left: 10px;
-                    transition: transform 0.2s ease;
+                
+                .learnweb-downloader-file-selector-section-header:hover {
+                    background-color: rgba(255,255,255,0.05);
                 }
-
-                .learnweb-downloader-file-selector-section-header.collapsed .toggle-icon {
-                    transform: rotate(-90deg); /* Rotate the icon when collapsed */
+                
+                .learnweb-downloader-file-selector-section-title {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    font-size: 15px;
                 }
-
+                
+                .learnweb-downloader-file-selector-section-title svg {
+                    width: 18px;
+                    height: 18px;
+                    color: #2B6581;
+                }
+                
+                .learnweb-downloader-file-selector-section-toggle {
+                    color: #888;
+                    transition: transform 0.3s ease;
+                }
+                
+                .learnweb-downloader-file-selector-section-header.collapsed .learnweb-downloader-file-selector-section-toggle {
+                    transform: rotate(-90deg);
+                }
+                
                 .learnweb-downloader-file-selector-section-content {
-                    margin-top: 10px;
-                    overflow: hidden;
-                    transition: max-height 0.3s ease, opacity 0.3s ease;
-                    max-height: 500px; /* Adjust based on your content */
+                    max-height: 1000px;
+                    transition: max-height 0.3s ease, opacity 0.2s ease;
                     opacity: 1;
                 }
-
+                
                 .learnweb-downloader-file-selector-section-content.collapsed {
                     max-height: 0;
                     opacity: 0;
                 }
-
-                .learnweb-downloader-file-selector-section-toggle {
-                    margin-left: 8px;
-                    font-size: 14px;
-                    color: #2B6581;
-                    cursor: pointer;
-                    background: none;
-                    border: none;
-                    padding: 4px 8px;
-                    border-radius: 4px;
-                    transition: background-color 0.2s, color 0.2s;
-                }
-
-                .learnweb-downloader-file-selector-section-toggle:hover {
-                    background-color: #1A3E4F;
-                    color: white;
-                }
-
+                
+                /* File Items */
                 .learnweb-downloader-file-selector-file {
                     display: flex;
                     align-items: center;
-                    padding: 8px 0;
-                    margin-left: 20px;
-                    border-bottom: 1px solid #444;
-                    color: white;
+                    padding: 12px 16px;
+                    background-color: rgba(0,0,0,0.1);
+                    transition: background-color 0.2s;
+                    border-top: 1px solid #3a3a3a;
                 }
-
+                
+                .learnweb-downloader-file-selector-file:hover {
+                    background-color: rgba(255,255,255,0.03);
+                }
+                
                 .learnweb-downloader-file-selector-file:last-child {
-                    border-bottom: none;
+                    border-bottom-left-radius: 8px;
+                    border-bottom-right-radius: 8px;
                 }
-
+                
                 .learnweb-downloader-file-checkbox {
+                    appearance: none;
+                    -webkit-appearance: none;
+                    width: 18px;
+                    height: 18px;
+                    border: 2px solid #555;
+                    border-radius: 4px;
                     margin-right: 12px;
                     cursor: pointer;
+                    position: relative;
+                    transition: all 0.2s;
                 }
-
+                
+                .learnweb-downloader-file-checkbox:checked {
+                    background-color: #2B6581;
+                    border-color: #2B6581;
+                }
+                
+                .learnweb-downloader-file-checkbox:checked::after {
+                    content: "✓";
+                    position: absolute;
+                    color: white;
+                    font-size: 12px;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                }
+                
+                .learnweb-downloader-file-info {
+                    flex: 1;
+                    display: flex;
+                    flex-direction: column;
+                }
+                
+                .learnweb-downloader-file-name {
+                    color: white;
+                    font-size: 14px;
+                    margin-bottom: 4px;
+                }
+                
+                .learnweb-downloader-file-meta {
+                    color: #888;
+                    font-size: 12px;
+                    display: flex;
+                    gap: 12px;
+                }
+                
+                .learnweb-downloader-file-icon {
+                    margin-right: 12px;
+                    color: #888;
+                }
+                
+                /* Footer Actions */
                 .learnweb-downloader-file-selector-actions {
                     display: flex;
                     justify-content: space-between;
+                    align-items: center;
                     padding-top: 16px;
-                    border-top: 1px solid #444;
+                    border-top: 1px solid #3a3a3a;
+                    bottom: 0;
                 }
 
+                .learnweb-downloader-file-selector-actions-top {
+                    display: flex;
+                    flex-direction: row;
+                    width: auto;
+                    gap: 8px;
+                }
+                
                 .learnweb-downloader-file-selector-select-all {
-                    background: none;
-                    border: none;
+                    background-color: #2B6581;
                     color: white;
+                    cursor: pointer;
+                    padding: 8px 16px;
+                    font-size: 14px;
+                    border-radius: 6px;
+                    transition: all 0.2s;
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                }
+                
+                .learnweb-downloader-file-selector-select-all:hover {
                     background-color: #1A3E4F;
-                    cursor: pointer;
-                    padding: 8px 12px;
-                    font-size: 14px;
-                    border-radius: 4px;
-                    margin-right: 8px;
-                    transition: background-color 0.2s, color 0.2s;
                 }
-
+                
                 .learnweb-downloader-file-selector-download {
-                    background-color: #4199C1;
+                    background-color: #2B6581;
                     color: white;
                     border: none;
-                    border-radius: 4px;
-                    padding: 10px 20px;
+                    border-radius: 6px;
+                    padding: 10px 24px;
                     cursor: pointer;
                     font-size: 14px;
-                    transition: background-color 0.2s;
+                    font-weight: 500;
+                    transition: all 0.2s;
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
                 }
-
+                
                 .learnweb-downloader-file-selector-download:hover {
                     background-color: #1A3E4F;
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
                 }
+                
+                .learnweb-downloader-file-selector-download:disabled {
+                    background-color: #3a3a3a;
+                    color: #666;
+                    cursor: not-allowed;
+                }
+                
+                /* Overlay */
                 .learnweb-downloader-overlay {
                     position: fixed;
                     top: 0;
                     left: 0;
                     right: 0;
                     bottom: 0;
-                    background-color: rgba(0,0,0,0.5);
+                    background-color: rgba(0,0,0,0.6);
                     z-index: 10000;
                     display: none;
+                    backdrop-filter: blur(4px);
+                    opacity: 0;
+                    transition: opacity 0.3s ease;
                 }
+                
                 .learnweb-downloader-overlay.active {
                     display: block;
+                    opacity: 1;
                 }
-                .learnweb-downloader-mini-progress {
-                    width: 50px;
-                    height: 5px;
-                    background-color: #444;
-                    border-radius: 2px;
-                    overflow: hidden;
+                
+                /* Empty State */
+                .learnweb-downloader-empty-state {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    padding: 40px 20px;
+                    color: #666;
+                    text-align: center;
                 }
-                .learnweb-downloader-mini-progress-inner {
-                    height: 100%;
-                    background-color: #03dac6;
-                    width: 0%;
+                
+                .learnweb-downloader-empty-state svg {
+                    width: 48px;
+                    height: 48px;
+                    margin-bottom: 16px;
+                    color: #3a3a3a;
+                }
+                
+                .learnweb-downloader-empty-state p {
+                    margin: 0;
+                    font-size: 14px;
+                }
+                
+                /* Responsive Adjustments */
+                @media (max-width: 600px) {
+                    .learnweb-downloader-file-selector {
+                        width: 95%;
+                        padding: 16px;
+                    }
+                    
+                    .learnweb-downloader-file-selector-title {
+                        font-size: 18px;
+                    }
+
+                    .learnweb-downloader-file-selector-actions-top {
+                        flex-direction: column-reverse;
+                        gap: 12px;
+                    }
+                    
+                    .learnweb-downloader-file-selector-actions {
+                        flex-direction: column-reverse;
+                        gap: 12px;
+                        bottom: 0;
+                    }
+                    
+                    .learnweb-downloader-file-selector-select-all,
+                    .learnweb-downloader-file-selector-download {
+                        width: 100%;
+                        justify-content: center;
+                    }
                 }
             </style>
             <button id="downloadAllTopBtn">
@@ -396,28 +487,13 @@ if (typeof init === "undefined") {
     document.body.appendChild(fabContainer)
     console.log("Floating action buttons created.")
 
-    // Create progress toast (less intrusive than overlay)
-    const progressToast = document.createElement("div")
-    progressToast.className = "learnweb-downloader-progress-toast"
-    progressToast.innerHTML = `
-            <div class="learnweb-downloader-progress-toast-header">
-                <div class="learnweb-downloader-progress-toast-title">Downloading Files</div>
-                <button class="learnweb-downloader-progress-toast-close">&times;</button>
-            </div>
-            <div class="learnweb-downloader-progress-bar">
-                <div class="learnweb-downloader-progress-bar-inner" id="progressBarInner"></div>
-            </div>
-            <div class="learnweb-downloader-progress-text" id="progressText">Preparing downloads...</div>
-        `
-    document.body.appendChild(progressToast)
-
     // Create file selector modal
     const fileSelector = document.createElement("div")
     fileSelector.className = "learnweb-downloader-file-selector"
     fileSelector.innerHTML = `
         <div class="learnweb-downloader-file-selector-header">
           <div class="learnweb-downloader-file-selector-title">Select Files to Download</div>
-          <div class="learnweb-downloader-file-selector-actions">
+          <div class="learnweb-downloader-file-selector-actions-top">
             <button class="learnweb-downloader-file-selector-select-all" id="selectAllFiles">Select All</button>
             <button class="learnweb-downloader-file-selector-select-all" id="deselectAllFiles">Deselect All</button>
           </div>
@@ -447,33 +523,6 @@ if (typeof init === "undefined") {
       const nextElement = section.nextElementSibling
       if (!nextElement) return
 
-      // Create a "Download" button for the section with icon
-      const downloadButton = document.createElement("button")
-      downloadButton.className = "learnweb-downloader-section-button"
-      downloadButton.innerHTML = `
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                    <polyline points="7 10 12 15 17 10"></polyline>
-                    <line x1="12" y1="15" x2="12" y2="3"></line>
-                </svg>
-                Select Files
-            `
-
-      // Find a better place to insert the button (next to the section title)
-      const sectionTitleContainer = section.querySelector("h3")
-      if (sectionTitleContainer) {
-        // Make sure the section title container is properly styled for the button
-        sectionTitleContainer.style.display = "flex"
-        sectionTitleContainer.style.alignItems = "center"
-        sectionTitleContainer.style.justifyContent = "space-between"
-        sectionTitleContainer.appendChild(downloadButton)
-      } else {
-        // Fallback to appending to the section header
-        section.appendChild(downloadButton)
-      }
-
-      console.log(`Download button added to section: ${sectionTitle}`)
-
       // Collect files in the section
       const filesInSection = []
       nextElement.querySelectorAll('a[href*="mod/resource/view.php?id="]').forEach((link) => {
@@ -489,16 +538,6 @@ if (typeof init === "undefined") {
 
       sectionFiles[sectionTitle] = filesInSection
       console.log(`Files collected for section: ${sectionTitle}`, filesInSection)
-
-      // Add click event to the section's "Download" button
-      downloadButton.addEventListener("click", (e) => {
-        e.preventDefault()
-        e.stopPropagation()
-        console.log(`Download button clicked for section: ${sectionTitle}`)
-
-        // Show file selector with only this section's files
-        showFileSelector([sectionTitle])
-      })
     })
 
     // Function to show file selector with specified sections (or all if not specified)
@@ -528,29 +567,12 @@ if (typeof init === "undefined") {
   
           const toggleIcon = document.createElement("span");
           toggleIcon.className = "toggle-icon";
-          toggleIcon.innerHTML = "&#9660;"; // Down arrow icon
+          toggleIcon.innerHTML = "&#9660;";
   
-          const selectAllButton = document.createElement("button");
-          selectAllButton.className = "learnweb-downloader-file-selector-section-toggle";
-          selectAllButton.textContent = "Select All";
-          selectAllButton.addEventListener("click", () => {
-              const checkboxes = sectionElement.querySelectorAll('input[type="checkbox"]');
-              checkboxes.forEach((cb) => (cb.checked = true));
-          });
-  
-          const deselectAllButton = document.createElement("button");
-          deselectAllButton.className = "learnweb-downloader-file-selector-section-toggle";
-          deselectAllButton.textContent = "Deselect All";
-          deselectAllButton.addEventListener("click", () => {
-              const checkboxes = sectionElement.querySelectorAll('input[type="checkbox"]');
-              checkboxes.forEach((cb) => (cb.checked = false));
-          });
-  
+          sectionCheckbox.checked = true;
           sectionHeader.appendChild(sectionCheckbox);
           sectionHeader.appendChild(sectionLabel);
           sectionHeader.appendChild(toggleIcon);
-          sectionHeader.appendChild(selectAllButton);
-          sectionHeader.appendChild(deselectAllButton);
           sectionElement.appendChild(sectionHeader);
   
           // Add event listener to section checkbox to toggle all files in the section
@@ -578,7 +600,7 @@ if (typeof init === "undefined") {
               fileCheckbox.dataset.url = file.url;
               fileCheckbox.dataset.filename = file.filename;
               fileCheckbox.dataset.section = file.section;
-              fileCheckbox.checked = true; // Default to checked
+              fileCheckbox.checked = true;
   
               const fileLabel = document.createElement("span");
               fileLabel.textContent = file.filename;
@@ -602,6 +624,9 @@ if (typeof init === "undefined") {
   
           sectionElement.appendChild(sectionContent);
           fileSelectorContent.appendChild(sectionElement);
+
+          sectionHeader.classList.toggle("collapsed");
+          sectionContent.classList.toggle("collapsed");
   
           // Add click event to the section header to toggle collapse/expand
           sectionHeader.addEventListener("click", () => {
@@ -654,8 +679,6 @@ if (typeof init === "undefined") {
 
     // Function to start download process
     function startDownload(files) {
-      // Show progress toast
-      progressToast.classList.add("active")
 
       // Ensure chrome is defined
       if (typeof chrome !== "undefined" && chrome.runtime) {
@@ -670,14 +693,12 @@ if (typeof init === "undefined") {
               console.log("Download initiated:", response)
             } else {
               console.error("Failed to initiate download:", response.error)
-              progressToast.classList.remove("active")
               alert(`Failed to download: ${response.error}`)
             }
           },
         )
       } else {
         console.error("Chrome runtime is not available.")
-        progressToast.classList.remove("active")
         alert("Chrome runtime is not available. Please ensure the extension is properly loaded.")
       }
     }
@@ -711,11 +732,6 @@ if (typeof init === "undefined") {
     // Add click event to close the file selector
     document.querySelector(".learnweb-downloader-file-selector-close").addEventListener("click", closeFileSelector)
 
-    // Add click event to close the progress toast
-    document.querySelector(".learnweb-downloader-progress-toast-close").addEventListener("click", () => {
-      progressToast.classList.remove("active")
-    })
-
     // Add click event to the overlay to close the file selector
     overlay.addEventListener("click", closeFileSelector)
 
@@ -739,32 +755,6 @@ if (typeof init === "undefined") {
 
     // Add click event to the "Download Selected" button
     document.getElementById("downloadSelectedFiles").addEventListener("click", downloadSelectedFiles)
-
-    // Listen for download progress updates
-    if (typeof chrome !== "undefined" && chrome.runtime) {
-      chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-        if (message.action === "download_progress") {
-          const progressBarInner = document.getElementById("progressBarInner")
-          const progressText = document.getElementById("progressText")
-
-          progressBarInner.style.width = `${message.percentage}%`
-          progressText.textContent = `Downloading: ${message.currentFile} (${message.completed}/${message.total})`
-
-          if (message.status === "complete" && message.completed === message.total) {
-            progressText.textContent = `Completed: ${message.total} files downloaded`
-            setTimeout(() => {
-              progressToast.classList.remove("active")
-            }, 3000)
-          }
-        } else if (message.action === "file_progress") {
-          // We don't need to update individual file progress in the toast
-        } else if (message.action === "trigger_download_all") {
-          // Trigger file selector from popup
-          showFileSelector()
-        }
-        return true
-      })
-    }
   }
   init()
 }
