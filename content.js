@@ -563,7 +563,7 @@ if (typeof init === "undefined") {
     
       const filesInSection = [];
       // Handle normal file links
-      nextElement.querySelectorAll('a[href*="mod/resource/view.php?id="]').forEach((link) => {
+      nextElement.querySelectorAll('a[href*="mod/resource/view.php?id="]').forEach((link) => {     
         const file = {
           url: link.href,
           filename: link.innerText.trim() + ".pdf",

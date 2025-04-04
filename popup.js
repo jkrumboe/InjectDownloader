@@ -107,7 +107,6 @@ document.addEventListener("DOMContentLoaded", () => {
                               <polyline points="14 2 14 8 20 8"></polyline>
                           </svg>
                           ${item.fileCount} files
-                          <span style="margin: 0 4px;">•</span>
                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 4px;">
                               <circle cx="12" cy="12" r="10"></circle>
                               <polyline points="12 6 12 12 16 14"></polyline>

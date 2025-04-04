@@ -4,7 +4,7 @@
     --primary-light: #64b5f6;
     --success: #66bb6a;
     --success-light: #81c784;
-    --error: #ef5350;
+    --error: #6b201f;
     --error-light: #e57373;
     --gray-100: #1e1e1e;
     --gray-200: #2e2e2e;
@@ -113,7 +113,8 @@ body {
 .history-list {
     border: 1px solid var(--gray-300);
     border-radius: var(--border-radius);
-    overflow: hidden;
+    overflow-y: auto; /* Enable vertical scrolling */
+    max-height: 250px; /* Set a fixed height */
     margin-bottom: 16px;
 }
 
