@@ -2,7 +2,7 @@
     --primary: #1e88e5;
     --primary-dark: #1565c0;
     --primary-light: #64b5f6;
-    --success: #66bb6a;
+    --success: #47854a;
     --success-light: #81c784;
     --error: #ef5350;
     --error-light: #e57373;
@@ -197,6 +197,85 @@ select:focus {
     height: 1px;
     background-color: var(--gray-300);
     margin: 30px 0;
+}
+
+/* Add these styles to the end of your options.css file */
+.path-input-container {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.path-input-container input {
+    flex-grow: 1;
+}
+
+.path-input-container button {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+    padding: 10px 12px;
+    background-color: var(--gray-200);
+    color: var(--gray-900);
+    border: 1px solid var(--gray-300);
+}
+
+.path-input-container button:hover {
+    background-color: var(--gray-300);
+}
+
+.path-input-container button svg {
+    width: 16px;
+    height: 16px;
+}
+
+.form-note {
+    font-size: 13px;
+    color: var(--gray-400);
+    display: flex;
+    align-items: center;
+    margin-top: 8px;
+    padding: 8px;
+    background-color: var(--gray-100);
+    border-radius: 4px;
+}
+
+.form-note svg {
+    width: 14px;
+    height: 14px;
+    margin-right: 6px;
+    flex-shrink: 0;
+}
+
+/* Add these styles to your options.css file */
+.path-input-container {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.path-input-container input {
+    flex-grow: 1;
+}
+
+.form-note {
+    font-size: 13px;
+    color: var(--gray-500);
+    display: flex;
+    align-items: center;
+    margin-top: 8px;
+    padding: 8px 10px;
+    background-color: var(--gray-100);
+    border-radius: 4px;
+    border: 1px solid var(--gray-200);
+}
+
+.form-note svg {
+    width: 14px;
+    height: 14px;
+    margin-right: 8px;
+    flex-shrink: 0;
 }
 
 /* Add a subtle animation for saving feedback */

@@ -754,10 +754,12 @@ if (typeof init === "undefined") {
         folderContent.classList.toggle("collapsed");
 
         // Add click event to the folder header to toggle collapse/expand
-        folderHeader.addEventListener("click", () => {
-          console.debug("Folder header clicked:", item.folderName);
-          folderHeader.classList.toggle("collapsed");
-          folderContent.classList.toggle("collapsed");
+        folderHeader.addEventListener("click", (event) => {
+
+          if (event.target.type !== "checkbox") {
+            folderHeader.classList.toggle("collapsed");
+            folderContent.classList.toggle("collapsed");
+          }
         });
       } else {
         // Render individual files
@@ -788,9 +790,12 @@ if (typeof init === "undefined") {
     sectionContent.classList.toggle("collapsed");
 
     // Add click event to the section header to toggle collapse/expand
-    sectionHeader.addEventListener("click", () => {
-      sectionHeader.classList.toggle("collapsed");
-      sectionContent.classList.toggle("collapsed");
+    sectionHeader.addEventListener("click", (event) => {
+
+          if (event.target.type !== "checkbox") {
+            sectionHeader.classList.toggle("collapsed");
+            sectionContent.classList.toggle("collapsed");
+          }
     });
   });
 

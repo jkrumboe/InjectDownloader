@@ -1,96 +1,110 @@
+// Modify the download_files handler in your background.js
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    if (message.action === "download_files") {
-      try {
-        // Use the course name or default if missing
-        const mainFolderName = sanitizeFilename(message.courseName || "LearnWebCourse")
-        // Group files by their section names
-        const filesBySection = {}
-        message.files.forEach((file) => {
-          if (!filesBySection[file.section]) {
-            filesBySection[file.section] = []
-          }
-          filesBySection[file.section].push(file)
-        })
-  
-        let completedDownloads = 0
-        const totalDownloads = message.files.length
-        const downloadIds = []
-        const downloadTracking = {}
-  
-        // Send initial progress update
-        chrome.runtime.sendMessage({
-          action: "download_progress",
-          completed: 0,
-          total: totalDownloads,
-          percentage: 0,
-          currentFile: "Preparing downloads...",
-          status: "initializing",
-        })
-  
-        // Get settings to check if we should ask before downloading
-        chrome.storage.sync.get("settings", (data) => {
-          const settings = data.settings || {}
-          const askBeforeDownload = settings.askBeforeDownload || false
-  
-          // Iterate over each section and download each file with fallback paths
-          Object.keys(filesBySection).forEach((section) => {
-            const sectionFolder = sanitizeFilename(section)
-            filesBySection[section].forEach((file) => {
-              const originalFilename = file.filename
-  
-              // Split filename into base and extension
-              let basename = originalFilename
-              let extension = ""
-              const lastDotIndex = originalFilename.lastIndexOf(".")
-              if (lastDotIndex > 0) {
-                basename = originalFilename.substring(0, lastDotIndex)
-                extension = originalFilename.substring(lastDotIndex)
-              } else {
-                extension = detectFileType(file.url, originalFilename)
-              }
-  
-              const sanitizedBasename = sanitizeFilename(basename)
-              let finalFilename = sanitizedBasename + extension
-              finalFilename = finalFilename.replace(/\.PDF$/i, ".pdf")
-  
-              downloadTracking[originalFilename] = { status: "pending", progress: 0 }
-  
-              tryDownload({
-                url: file.url,
-                path: `${mainFolderName}/${sectionFolder}/${finalFilename}`,
-                fallbacks: [`${mainFolderName}/${finalFilename}`, `${mainFolderName}/file_${Date.now()}.pdf`],
-                saveAs: askBeforeDownload,
-                onSuccess: (id) => {
-                  downloadIds.push(id)
-                  downloadTracking[originalFilename].id = id
-                  downloadTracking[originalFilename].status = "downloading"
-  
-                  chrome.runtime.sendMessage({
-                    action: "download_progress",
-                    currentFile: originalFilename,
-                    status: "downloading",
-                    completed: completedDownloads,
-                    total: totalDownloads,
-                    percentage: Math.round((completedDownloads / totalDownloads) * 100),
-                  })
-                },
-                onAllFailed: () => {
-                  completedDownloads++
-                  downloadTracking[originalFilename].status = "failed"
-                  chrome.runtime.sendMessage({
-                    action: "download_progress",
-                    currentFile: originalFilename,
-                    status: "failed",
-                    completed: completedDownloads,
-                    total: totalDownloads,
-                    percentage: Math.round((completedDownloads / totalDownloads) * 100),
-                  })
-                  console.error(`All download attempts failed for ${originalFilename}`)
-                },
-              })
+  if (message.action === "download_files") {
+    try {
+      // Use the course name or default if missing
+      const mainFolderName = sanitizeFilename(message.courseName || "LearnWebCourse")
+      
+      // Group files by their section names
+      const filesBySection = {}
+      message.files.forEach((file) => {
+        if (!filesBySection[file.section]) {
+          filesBySection[file.section] = []
+        }
+        filesBySection[file.section].push(file)
+      })
+
+      let completedDownloads = 0
+      const totalDownloads = message.files.length
+      const downloadIds = []
+      const downloadTracking = {}
+
+      // Send initial progress update
+      chrome.runtime.sendMessage({
+        action: "download_progress",
+        completed: 0,
+        total: totalDownloads,
+        percentage: 0,
+        currentFile: "Preparing downloads...",
+        status: "initializing",
+      })
+
+      // Get settings to check configuration options
+      chrome.storage.sync.get("settings", (data) => {
+        const settings = data.settings || {}
+        console.log("Settings loaded:", settings)
+        
+        // Only check if we should ask before download
+        const askBeforeDownload = settings.askBeforeDownload || false
+        
+        // Iterate over each section and download each file with simplified path structure
+        Object.keys(filesBySection).forEach((section) => {
+          const sectionFolder = sanitizeFilename(section)
+          filesBySection[section].forEach((file) => {
+            const originalFilename = file.filename
+
+            // Split filename into base and extension
+            let basename = originalFilename
+            let extension = ""
+            const lastDotIndex = originalFilename.lastIndexOf(".")
+            if (lastDotIndex > 0) {
+              basename = originalFilename.substring(0, lastDotIndex)
+              extension = originalFilename.substring(lastDotIndex)
+            } else {
+              extension = detectFileType(file.url, originalFilename)
+            }
+
+            const sanitizedBasename = sanitizeFilename(basename)
+            let finalFilename = sanitizedBasename + extension
+            finalFilename = finalFilename.replace(/\.PDF$/i, ".pdf")
+
+            downloadTracking[originalFilename] = { status: "pending", progress: 0 }
+
+            // Simplified path structure without custom download paths
+            const mainPath = `${mainFolderName}/${sectionFolder}/${finalFilename}`
+            const fallbackPaths = [
+              `${mainFolderName}/${finalFilename}`, 
+              `${mainFolderName}/file_${Date.now()}.pdf`
+            ]
+            
+            tryDownload({
+              url: file.url,
+              path: mainPath,
+              fallbacks: fallbackPaths,
+              saveAs: askBeforeDownload,
+              onSuccess: (id) => {
+                downloadIds.push(id)
+                downloadTracking[originalFilename].id = id
+                downloadTracking[originalFilename].status = "downloading"
+                
+                chrome.runtime.sendMessage({
+                  action: "download_progress",
+                  currentFile: originalFilename,
+                  status: "downloading",
+                  completed: completedDownloads,
+                  total: totalDownloads,
+                  percentage: Math.round((completedDownloads / totalDownloads) * 100),
+                })
+              },
+              onAllFailed: () => {
+                completedDownloads++
+                downloadTracking[originalFilename].status = "failed"
+                chrome.runtime.sendMessage({
+                  action: "download_progress",
+                  currentFile: originalFilename,
+                  status: "failed",
+                  completed: completedDownloads,
+                  total: totalDownloads,
+                  percentage: Math.round((completedDownloads / totalDownloads) * 100),
+                })
+                console.error(`All download attempts failed for ${originalFilename}`)
+              },
             })
           })
         })
+      })
+      
+      // Rest of your existing download tracking code...
   
         // Listen for download progress and completion
         chrome.downloads.onChanged.addListener(function downloadListener(delta) {
@@ -134,8 +148,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                 // Get settings to check if notifications are enabled
                 chrome.storage.sync.get("settings", (data) => {
                   const settings = data.settings || {}
-                  const showNotifications = settings.showNotifications !== false // Default to true
-  
+                  const showNotifications = settings.showNotifications !== false
                   if (showNotifications) {
                     chrome.notifications.create({
                       type: "basic",
@@ -204,24 +217,33 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   /**
    * Recursively attempts to download a file using fallback paths.
    */
+  /**
+ * Recursively attempts to download a file using fallback paths.
+ */
   function tryDownload(options) {
     const { url, path, fallbacks = [], saveAs = false, onSuccess, onAllFailed } = options
+    
+    // Sanitize the path for Chrome's downloads API
+    const safePath = sanitizeDownloadPath(path);
+    
+    console.log(`Attempting to download: ${url} to ${safePath}`);
+    
     chrome.downloads.download(
       {
         url: url,
-        filename: path,
+        filename: safePath,
         saveAs: saveAs,
       },
       (downloadId) => {
         if (chrome.runtime.lastError) {
-          console.error(`Download failed for ${path}:`, chrome.runtime.lastError)
+          console.error(`Download failed for ${safePath}:`, chrome.runtime.lastError)
           if (fallbacks.length > 0) {
-            const nextPath = fallbacks.shift()
+            const nextPath = sanitizeDownloadPath(fallbacks.shift());
             console.log(`Trying fallback path: ${nextPath}`)
             tryDownload({
               url,
               path: nextPath,
-              fallbacks,
+              fallbacks: fallbacks.map(sanitizeDownloadPath), // Sanitize all fallbacks
               saveAs,
               onSuccess,
               onAllFailed,
@@ -230,15 +252,28 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             if (onAllFailed) onAllFailed()
           }
         } else if (downloadId) {
-          console.log("Download started, ID:", downloadId, "Path:", path)
-          if (onSuccess) onSuccess(downloadId)
+          console.log("Download started, ID:", downloadId, "Path:", safePath)
+          
+          // We need to get the actual download path
+          // This might be different from what we specified if the user chooses a different location
+          if (saveAs) {
+            chrome.downloads.search({id: downloadId}, (items) => {
+              if (items && items.length > 0 && items[0].filename) {
+                if (onSuccess) onSuccess(downloadId, items[0].filename)
+              } else {
+                if (onSuccess) onSuccess(downloadId, safePath)
+              }
+            })
+          } else {
+            if (onSuccess) onSuccess(downloadId, safePath)
+          }
         } else {
           if (fallbacks.length > 0) {
-            const nextPath = fallbacks.shift()
+            const nextPath = sanitizeDownloadPath(fallbacks.shift());
             tryDownload({
               url,
               path: nextPath,
-              fallbacks,
+              fallbacks: fallbacks.map(sanitizeDownloadPath), // Sanitize all fallbacks
               saveAs,
               onSuccess,
               onAllFailed,
@@ -299,4 +334,35 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   
     return extension
   }
-    
+
+  // Add this function before the tryDownload function:
+
+/**
+ * Sanitizes a download path for Chrome's downloads API.
+ * Ensures there are no backslashes, no drive letters, and proper path structure.
+ * Also handles removal of Downloads folder nesting.
+ */
+function sanitizeDownloadPath(path) {
+  // Replace backslashes with forward slashes
+  let sanitized = path.replace(/\\/g, '/');
+  
+  // Remove drive letter prefixes (like C:/)
+  sanitized = sanitized.replace(/^[A-Za-z]:\//g, '');
+  
+  // Handle potential Downloads folder nesting issues
+  // If the path contains multiple "Downloads" folders, keep only the last part
+  const downloadsPattern = /downloads\/.*?downloads\//i;
+  while (downloadsPattern.test(sanitized)) {
+    sanitized = sanitized.replace(downloadsPattern, 'downloads/');
+  }
+  
+  // Ensure there are no duplicate slashes
+  sanitized = sanitized.replace(/\/+/g, '/');
+  
+  // Remove leading slash if present
+  sanitized = sanitized.replace(/^\//, '');
+  
+  console.log(`Sanitized path: ${path} → ${sanitized}`);
+  
+  return sanitized;
+}

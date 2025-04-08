@@ -111,15 +111,20 @@ body {
 }
 
 .history-list {
+    padding-top: 6px;
+    padding-left: 6px;
+    padding-right: 6px;
     border: 1px solid var(--gray-300);
     border-radius: var(--border-radius);
     overflow-y: auto; /* Enable vertical scrolling */
     max-height: 250px; /* Set a fixed height */
-    margin-bottom: 16px;
+    margin-bottom: 12px;
 }
 
 .history-item {
     padding: 12px;
+    padding-left: 12px;
+    padding-right: 12px;
     border-bottom: 1px solid var(--gray-300);
 }
 

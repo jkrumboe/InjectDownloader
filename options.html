@@ -23,9 +23,22 @@
             </h2>
             
             <div class="form-group">
-                <label for="defaultDownloadPath">Default Download Path</label>
-                <input type="text" id="defaultDownloadPath" placeholder="e.g., LearnWeb/Courses">
-                <p class="form-help">This will be used as the base folder for all downloads.</p>
+                <label for="defaultDownloadPath">Subfolder within Downloads</label>
+                <div class="path-input-container">
+                    <input type="text" id="defaultDownloadPath" placeholder="e.g., LearnWeb/Courses">
+                </div>
+                <p class="form-help">Enter a subfolder name to organize your downloads (e.g., "LearnWeb/Courses"). Leave empty to use the browser's default downloads location without a subfolder.</p>
+                <div class="form-note">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                    </svg>
+                    <span>
+                        <strong>Note:</strong> All files will be saved to your browser's default Downloads folder. 
+                        This setting only creates an organizational subfolder within Downloads.
+                    </span>
+                </div>
             </div>
             
             <div class="form-group checkbox-group">
