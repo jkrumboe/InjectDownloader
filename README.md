@@ -1,13 +1,6 @@
-# LearnWeb File Downloader
+## !!! IMPORTANT: THIS EXTENSIONS DOWNLOADS INTO THE STANDARD DOWNLOAD FOLDER !!!
 
-This Browser extension allows users to better download files from a LearnWeb course page. It provides a user-friendly interface to select and download files in bulk, organized by sections.
-
-## Features
-
-- **All in one File Extraction**: Extracts all downloadable files from the current LearnWeb course page.
-- **Bulk Download**: Allows users to select multiple files or entire sections for download.
-- **Organized by Sections**: Files are grouped by their respective sections for easy navigation.
-- **User-Friendly Interface**: Simple and intuitive popup interface with checkboxes for selection.
+A Chrome extension for efficiently downloading course materials from LearnWeb (University of Münster) with organized folder structure and bulk download capabilities.
 
 ## Installation
 
@@ -17,23 +10,23 @@ This Browser extension allows users to better download files from a LearnWeb cou
     git clone https://github.com/Beerejustin/Moodle-Parser.git
     ```
 
-2. Open your browser and navigate to [chrome://extensions/](http://_vscodecontentref_/1).
+2. Open your browser and navigate to [chrome://extensions/](http://_vscodecontentref_/1) or your browsers extentions location.
 
 3. Enable "Developer mode".
 
 4. Click "Load unpacked" and select the directory where you cloned or extracted the repository.
 
-## Usage
+5. Click on the extension icon in the browser's toolbar and pin this extension for better access to it.
 
-1. Navigate to a LearnWeb course page.
+6. Navigate to a LearnWeb course page.
 
-2. Click on the LearnWeb File Downloader extension icon in the browser's toolbar and pin it.
+## Features
 
-3. Click on the "Select Files to Download" button or the download icon at the bottom right corner.
-
-4. Select the files or sections you want to download.
-
-5. Click the "Download Selected" button to start the download process.
+- **File Detection** - Automatically finds all downloadable resources in a LearnWeb course.
+- **Bulk Download** - Download multiple selected files or entire sections with fewer clicks.
+- **Organized by Sections**: Files are grouped by their respective sections for easy navigation.
+- **Folder Support** - Handles nested folder structures within course sections
+- **Download History** - Tracks your recent downloads for quick reference (Last 5 downkloads)
 
 ## Contributing
 
