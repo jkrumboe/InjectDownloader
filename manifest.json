@@ -10,7 +10,7 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://www.uni-muenster.de/LearnWeb/learnweb2/*"],
+      "matches": ["https://www.uni-muenster.de/LearnWeb/learnweb2/course*"],
       "js": ["content.js"]
     }
   ],
