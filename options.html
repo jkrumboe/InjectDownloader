@@ -23,11 +23,6 @@
             </h2>
             
             <div class="form-group">
-                <label for="defaultDownloadPath">Subfolder within Downloads</label>
-                <div class="path-input-container">
-                    <input type="text" id="defaultDownloadPath" placeholder="e.g., LearnWeb/Courses">
-                </div>
-                <p class="form-help">Enter a subfolder name to organize your downloads (e.g., "LearnWeb/Courses"). Leave empty to use the browser's default downloads location without a subfolder.</p>
                 <div class="form-note">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="10"></circle>
@@ -36,24 +31,17 @@
                     </svg>
                     <span>
                         <strong>Note:</strong> All files will be saved to your browser's default Downloads folder. 
-                        This setting only creates an organizational subfolder within Downloads.
                     </span>
                 </div>
             </div>
             
-            <div class="form-group checkbox-group">
-                <input type="checkbox" id="askBeforeDownload">
-                <label for="askBeforeDownload">Ask before downloading (shows save dialog)</label>
-            </div>
+            
+            <!-- <div class="form-group checkbox-group">
+                <input type="checkbox" id="askBeforeDownload">Ask before downloading (shows save dialog)
+            </div> -->
             
             <div class="form-group checkbox-group">
-                <input type="checkbox" id="showNotifications" checked>
-                <label for="showNotifications">Show notifications</label>
-            </div>
-            
-            <div class="form-group checkbox-group">
-                <input type="checkbox" id="useMinimalProgress" checked>
-                <label for="useMinimalProgress">Use minimal progress indicator (toast instead of overlay)</label>
+                <input type="checkbox" id="showNotifications" checked>Show notifications
             </div>
             
             <div class="divider"></div>
@@ -68,29 +56,12 @@
                 File Organization
             </h2>
             
-            <div class="form-group">
-                <label for="fileNaming">File Naming Convention</label>
-                <select id="fileNaming">
-                    <option value="original">Original filename</option>
-                    <option value="section_filename">Section - Filename</option>
-                    <option value="course_section_filename">Course - Section - Filename</option>
-                </select>
+            <div class="form-group checkbox-group">
+                <input type="checkbox" id="createFolderStructure" checked>Create folder structure (Course / Section)
             </div>
             
             <div class="form-group checkbox-group">
-                <input type="checkbox" id="autoDetectFileType" checked>
-                <label for="autoDetectFileType">Auto-detect file types (don't default to PDF)</label>
-            </div>
-            
-            <div class="form-group checkbox-group">
-                <input type="checkbox" id="createFolderStructure" checked>
-                <label for="createFolderStructure">Create folder structure (Course/Section)</label>
-            </div>
-            
-            <div class="form-group checkbox-group">
-                <input type="checkbox" id="rememberFileSelection" checked>
-                <label for="rememberFileSelection">Remember file selection between sessions</label>
-                <p class="form-help">When enabled, your file selection will be remembered for each course.</p>
+                <input type="checkbox" id="rememberFileSelection" checked>Enable file History (last 5 downloads)
             </div>
         </div>
         

@@ -189,7 +189,6 @@ if (typeof init === "undefined") {
             background-color: #2e2e2e;
             border-radius: 10px;
             padding: 0;
-            overflow: hidden;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             border: 1px solid #3a3a3a;
           }
@@ -236,6 +235,7 @@ if (typeof init === "undefined") {
             align-items: center;
             transition: max-height 0.3s ease, opacity 0.2s ease;
             opacity: 1;
+            overflow-y: scroll;
           }
           
           .learnweb-downloader-file-selector-section-content.collapsed {
@@ -288,6 +288,7 @@ if (typeof init === "undefined") {
             background-color: rgba(0,0,0,0.1);
             transition: background-color 0.2s;
             border-top: 1px solid #3a3a3a;
+            overflow-y: hidden;
           }
           
           .learnweb-downloader-file-selector-file:hover {
@@ -453,6 +454,41 @@ if (typeof init === "undefined") {
             margin: 0;
             font-size: 14px;
           }
+
+          /* Add to your existing CSS */
+          .learnweb-downloader-file-selector-folder {
+            position: relative;
+            z-index: 1;
+          }
+
+          .learnweb-downloader-file-selector-folder.active {
+            z-index: 2;
+          }
+
+          /* Make collapsed folders visually distinct but still accessible */
+          .learnweb-downloader-file-selector-folder-header.collapsed {
+            border-radius: 8px;
+          }
+
+          .learnweb-downloader-file-selector-folder-content.collapsed {
+            display: none;
+          }
+
+          /* Update the transition for better collapsed state */
+          .learnweb-downloader-file-selector-folder-content {
+            margin-top: 10px;
+            padding-left: 20px;
+            display: block;
+          }
+
+          /* Change toggle icon rotation */
+          .learnweb-downloader-file-selector-folder-header .toggle-icon {
+            transition: transform 0.3s ease;
+          }
+
+          .learnweb-downloader-file-selector-folder-header.collapsed .toggle-icon {
+            transform: rotate(-90deg);
+          }
           
           /* Responsive Adjustments */
           @media (max-width: 600px) {
@@ -566,7 +602,7 @@ if (typeof init === "undefined") {
       nextElement.querySelectorAll('a[href*="mod/resource/view.php?id="]').forEach((link) => {     
         const file = {
           url: link.href,
-          filename: link.innerText.trim() + ".pdf",
+          filename: link.innerText.trim(),
           section: sectionTitle,
           element: link,
         };
@@ -623,186 +659,183 @@ if (typeof init === "undefined") {
         });
     }
 
-    // Function to show file selector with specified sections (or all if not specified)
+  // Function to show file selector with specified sections (or all if not specified)
   function showFileSelector(sectionsToShow = null) {
-  const fileSelectorContent = document.getElementById("fileSelectorContent");
-  fileSelectorContent.innerHTML = "";
+    const fileSelectorContent = document.getElementById("fileSelectorContent");
+    fileSelectorContent.innerHTML = "";
 
-  const sections = sectionsToShow || Object.keys(sectionFiles);
+    const sections = sectionsToShow || Object.keys(sectionFiles);
 
-  sections.forEach((sectionTitle) => {
-    const files = sectionFiles[sectionTitle];
-    if (!files || files.length === 0) return;
+    sections.forEach((sectionTitle) => {
+      const files = sectionFiles[sectionTitle];
+      if (!files || files.length === 0) return;
 
-    const sectionElement = document.createElement("div");
-    sectionElement.className = "learnweb-downloader-file-selector-section";
+      const sectionElement = document.createElement("div");
+      sectionElement.className = "learnweb-downloader-file-selector-section";
 
-    const sectionHeader = document.createElement("div");
-    sectionHeader.className = "learnweb-downloader-file-selector-section-header";
+      const sectionHeader = document.createElement("div");
+      sectionHeader.className = "learnweb-downloader-file-selector-section-header";
 
-    const sectionCheckbox = document.createElement("input");
-    sectionCheckbox.type = "checkbox";
-    sectionCheckbox.className = "learnweb-downloader-file-checkbox";
-    sectionCheckbox.dataset.section = sectionTitle;
+      const sectionCheckbox = document.createElement("input");
+      sectionCheckbox.type = "checkbox";
+      sectionCheckbox.className = "learnweb-downloader-file-checkbox";
+      sectionCheckbox.dataset.section = sectionTitle;
 
-    const sectionLabel = document.createElement("span");
-    sectionLabel.textContent = sectionTitle;
+      const sectionLabel = document.createElement("span");
+      sectionLabel.textContent = sectionTitle;
 
-    const toggleIcon = document.createElement("span");
-    toggleIcon.className = "toggle-icon";
-    toggleIcon.innerHTML = "&#9660;";
+      const toggleIcon = document.createElement("span");
+      toggleIcon.className = "toggle-icon";
+      toggleIcon.innerHTML = "&#9660;";
 
-    sectionCheckbox.checked = true;
-    sectionHeader.appendChild(sectionCheckbox);
-    sectionHeader.appendChild(sectionLabel);
-    sectionHeader.appendChild(toggleIcon);
-    sectionElement.appendChild(sectionHeader);
+      sectionCheckbox.checked = true;
+      sectionHeader.appendChild(sectionCheckbox);
+      sectionHeader.appendChild(sectionLabel);
+      sectionHeader.appendChild(toggleIcon);
+      sectionElement.appendChild(sectionHeader);
 
-    // Add event listener to section checkbox to toggle all files in the section
-    sectionCheckbox.addEventListener("change", () => {
-      const fileCheckboxes = sectionElement.querySelectorAll(
-        '.learnweb-downloader-file-selector-file input[type="checkbox"]',
-      );
-      fileCheckboxes.forEach((checkbox) => {
-        checkbox.checked = sectionCheckbox.checked;
-      });
-    });
-
-    // Create a container for the files in this section
-    const sectionContent = document.createElement("div");
-    sectionContent.className = "learnweb-downloader-file-selector-section-content";
-
-    // Add files and folders
-    files.forEach((item) => {
-      if (item.folderName) {
-        // Render folder as a subsection
-        const folderElement = document.createElement("div");
-        folderElement.className = "learnweb-downloader-file-selector-folder";
-
-        const folderHeader = document.createElement("div");
-        folderHeader.className = "learnweb-downloader-file-selector-folder-header";
-
-        const folderCheckbox = document.createElement("input");
-        folderCheckbox.type = "checkbox";
-        folderCheckbox.className = "learnweb-downloader-file-checkbox";
-        folderCheckbox.dataset.folder = item.folderName;
-
-        const folderLabel = document.createElement("span");
-        folderLabel.textContent = item.folderName;
-
-        const folderToggleIcon = document.createElement("span");
-        folderToggleIcon.className = "toggle-icon";
-        folderToggleIcon.innerHTML = "&#9660;";
-
-        folderCheckbox.checked = true;
-        folderHeader.appendChild(folderCheckbox);
-        folderHeader.appendChild(folderLabel);
-        folderHeader.appendChild(folderToggleIcon);
-        folderElement.appendChild(folderHeader);
-
-        // Add event listener to folder checkbox to toggle all files in the folder
-        folderCheckbox.addEventListener("change", () => {
-          const fileCheckboxes = folderElement.querySelectorAll(
-            '.learnweb-downloader-file-selector-file input[type="checkbox"]',
-          );
-          fileCheckboxes.forEach((checkbox) => {
-            checkbox.checked = folderCheckbox.checked;
-          });
+      // Add event listener to section checkbox to toggle all files in the section
+      sectionCheckbox.addEventListener("change", () => {
+        const fileCheckboxes = sectionElement.querySelectorAll(
+          '.learnweb-downloader-file-selector-file input[type="checkbox"]',
+        );
+        fileCheckboxes.forEach((checkbox) => {
+          checkbox.checked = sectionCheckbox.checked;
         });
+      });
 
-        // Create a container for the files in this folder
-        const folderContent = document.createElement("div");
-        folderContent.className = "learnweb-downloader-file-selector-folder-content";
+      // Create a container for the files in this section
+      const sectionContent = document.createElement("div");
+      sectionContent.className = "learnweb-downloader-file-selector-section-content";
 
-        item.files.forEach((file) => {
+      // Add files and folders
+      files.forEach((item) => {
+        if (item.folderName) {
+          // Render folder as a subsection
+          const folderElement = document.createElement("div");
+          folderElement.className = "learnweb-downloader-file-selector-folder";
+
+          const folderHeader = document.createElement("div");
+          folderHeader.className = "learnweb-downloader-file-selector-folder-header collapsed"; // Start collapsed
+
+          const folderCheckbox = document.createElement("input");
+          folderCheckbox.type = "checkbox";
+          folderCheckbox.className = "learnweb-downloader-file-checkbox";
+          folderCheckbox.dataset.folder = item.folderName;
+
+          const folderLabel = document.createElement("span");
+          folderLabel.textContent = item.folderName;
+
+          const folderToggleIcon = document.createElement("span");
+          folderToggleIcon.className = "toggle-icon";
+          folderToggleIcon.innerHTML = "&#9660;";
+
+          folderCheckbox.checked = true;
+          folderHeader.appendChild(folderCheckbox);
+          folderHeader.appendChild(folderLabel);
+          folderHeader.appendChild(folderToggleIcon);
+          folderElement.appendChild(folderHeader);
+
+          // Add event listener to folder checkbox to toggle all files in the folder
+          folderCheckbox.addEventListener("change", () => {
+            const fileCheckboxes = folderElement.querySelectorAll(
+              '.learnweb-downloader-file-selector-file input[type="checkbox"]',
+            );
+            fileCheckboxes.forEach((checkbox) => {
+              checkbox.checked = folderCheckbox.checked;
+            });
+          });
+
+          // Create a container for the files in this folder
+          const folderContent = document.createElement("div");
+          folderContent.className = "learnweb-downloader-file-selector-folder-content collapsed"; // Start collapsed
+
+          // Add files to the folder content
+          item.files.forEach((file) => {
+            const fileElement = document.createElement("div");
+            fileElement.className = "learnweb-downloader-file-selector-file";
+
+            const fileCheckbox = document.createElement("input");
+            fileCheckbox.type = "checkbox";
+            fileCheckbox.className = "learnweb-downloader-file-checkbox";
+            fileCheckbox.dataset.url = file.url;
+            fileCheckbox.dataset.filename = file.filename;
+            fileCheckbox.dataset.section = file.section;
+            fileCheckbox.dataset.folder = file.folder || ""; // Include folder info if available
+            fileCheckbox.checked = true;
+
+            const fileLabel = document.createElement("span");
+            fileLabel.textContent = file.filename;
+
+            fileElement.appendChild(fileCheckbox);
+            fileElement.appendChild(fileLabel);
+            folderContent.appendChild(fileElement);
+
+            // Add event listener to update folder checkbox state
+            fileCheckbox.addEventListener("change", () => {
+              const fileCheckboxes = folderContent.querySelectorAll(
+                '.learnweb-downloader-file-selector-file input[type="checkbox"]',
+              );
+              const allChecked = Array.from(fileCheckboxes).every((cb) => cb.checked);
+              const someChecked = Array.from(fileCheckboxes).some((cb) => cb.checked);
+
+              folderCheckbox.checked = someChecked;
+              folderCheckbox.indeterminate = someChecked && !allChecked;
+            });
+          });
+
+          folderElement.appendChild(folderContent);
+          sectionContent.appendChild(folderElement);
+
+          // Add click event to the folder header to toggle collapse/expand
+          folderHeader.addEventListener("click", (event) => {
+            if (event.target.type !== "checkbox") {
+              // Only toggle the clicked folder, not affecting others
+              event.stopPropagation(); // Prevent event bubbling
+              folderHeader.classList.toggle("collapsed");
+              folderContent.classList.toggle("collapsed");
+            }
+          });
+        } else {
+          // Render individual files
           const fileElement = document.createElement("div");
           fileElement.className = "learnweb-downloader-file-selector-file";
 
           const fileCheckbox = document.createElement("input");
           fileCheckbox.type = "checkbox";
           fileCheckbox.className = "learnweb-downloader-file-checkbox";
-          fileCheckbox.dataset.url = file.url;
-          fileCheckbox.dataset.filename = file.filename;
-          fileCheckbox.dataset.section = file.section;
-          fileCheckbox.dataset.folder = file.folder || ""; // Include folder info if available
+          fileCheckbox.dataset.url = item.url;
+          fileCheckbox.dataset.filename = item.filename;
+          fileCheckbox.dataset.section = item.section;
           fileCheckbox.checked = true;
 
           const fileLabel = document.createElement("span");
-          fileLabel.textContent = file.filename;
+          fileLabel.textContent = item.filename;
 
           fileElement.appendChild(fileCheckbox);
           fileElement.appendChild(fileLabel);
-          folderContent.appendChild(fileElement);
+          sectionContent.appendChild(fileElement);
+        }
+      });
 
-          // Add event listener to update folder checkbox state
-          fileCheckbox.addEventListener("change", () => {
-            const fileCheckboxes = folderContent.querySelectorAll(
-              '.learnweb-downloader-file-selector-file input[type="checkbox"]',
-            );
-            const allChecked = Array.from(fileCheckboxes).every((cb) => cb.checked);
-            const someChecked = Array.from(fileCheckboxes).some((cb) => cb.checked);
+      sectionElement.appendChild(sectionContent);
+      fileSelectorContent.appendChild(sectionElement);
 
-            folderCheckbox.checked = someChecked;
-            folderCheckbox.indeterminate = someChecked && !allChecked;
-          });
-        });
-
-        folderElement.appendChild(folderContent);
-        sectionContent.appendChild(folderElement);
-
-        folderHeader.classList.toggle("collapsed");
-        folderContent.classList.toggle("collapsed");
-
-        // Add click event to the folder header to toggle collapse/expand
-        folderHeader.addEventListener("click", (event) => {
-
-          if (event.target.type !== "checkbox") {
-            folderHeader.classList.toggle("collapsed");
-            folderContent.classList.toggle("collapsed");
-          }
-        });
-      } else {
-        // Render individual files
-        const fileElement = document.createElement("div");
-        fileElement.className = "learnweb-downloader-file-selector-file";
-
-        const fileCheckbox = document.createElement("input");
-        fileCheckbox.type = "checkbox";
-        fileCheckbox.className = "learnweb-downloader-file-checkbox";
-        fileCheckbox.dataset.url = item.url;
-        fileCheckbox.dataset.filename = item.filename;
-        fileCheckbox.dataset.section = item.section;
-        fileCheckbox.checked = true;
-
-        const fileLabel = document.createElement("span");
-        fileLabel.textContent = item.filename;
-
-        fileElement.appendChild(fileCheckbox);
-        fileElement.appendChild(fileLabel);
-        sectionContent.appendChild(fileElement);
-      }
+      // Set sections to start expanded (unlike folders)
+      // Add click event to the section header to toggle collapse/expand
+      sectionHeader.addEventListener("click", (event) => {
+        if (event.target.type !== "checkbox") {
+          event.stopPropagation(); // Prevent event bubbling
+          sectionHeader.classList.toggle("collapsed");
+          sectionContent.classList.toggle("collapsed");
+        }
+      });
     });
 
-    sectionElement.appendChild(sectionContent);
-    fileSelectorContent.appendChild(sectionElement);
-
-    sectionHeader.classList.toggle("collapsed");
-    sectionContent.classList.toggle("collapsed");
-
-    // Add click event to the section header to toggle collapse/expand
-    sectionHeader.addEventListener("click", (event) => {
-
-          if (event.target.type !== "checkbox") {
-            sectionHeader.classList.toggle("collapsed");
-            sectionContent.classList.toggle("collapsed");
-          }
-    });
-  });
-
-  // Show the file selector and overlay
-  fileSelector.classList.add("active");
-  overlay.classList.add("active");
-}
+    // Show the file selector and overlay
+    fileSelector.classList.add("active");
+    overlay.classList.add("active");
+  }
 
     // Function to close file selector
     function closeFileSelector() {
