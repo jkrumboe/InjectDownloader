@@ -18,7 +18,7 @@ A Chrome extension for efficiently downloading course materials from LearnWeb (U
 
 5. Click on the extension icon in the browser's toolbar and pin this extension for better access to it.
 
-6. Navigate to a LearnWeb course page.
+6. Navigate to a [LearnWeb](https://www.uni-muenster.de/LearnWeb/learnweb2/) course page.
 
 ## Features
 
