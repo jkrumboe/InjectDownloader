@@ -2,18 +2,25 @@ var init
 
 if (typeof init === "undefined") {
   init = () => {
-    console.debug("Initializing InjectDownloader...")
+    //console.debug("Initializing InjectDownloader...")
 
     // Extract the course name from the page title
-    const pageTitleElement = document.querySelector("h1.page-title")
+    const pageTitleElement = document.querySelector("span.page-title")
     const courseName = pageTitleElement ? pageTitleElement.innerText.trim() : "LearnWebCourse"
-    console.debug("Course name extracted:", courseName)
+    //console.debug("Course name extracted:", courseName)
+
+    // Adjust the padding of the parent div to make it smaller
+    const parentDiv = pageTitleElement ? pageTitleElement.parentElement : null
+    if (parentDiv) {
+      parentDiv.style.padding = "10px" // Set the desired padding value
+      //console.debug("Parent div padding adjusted to 10px.")
+    }
 
     // Inject the external CSS file
     const styleLink = document.createElement("link");
     styleLink.rel = "stylesheet";
     styleLink.href = chrome.runtime.getURL("content.css"); // Adjust the path if needed
-    document.head.appendChild(styleLink);
+    // document.head.appendChild(styleLink);
 
     // Create a container for the "Download All" button at the top
     const downloadAllContainer = document.createElement("div")
@@ -26,17 +33,17 @@ if (typeof init === "undefined") {
             <polyline points="7 10 12 15 17 10"></polyline>
             <line x1="12" y1="15" x2="12" y2="3"></line>
           </svg>
-          Select Files to Download
+          Open Downloader
         </button>
       `
 
     // Insert the "Download All" button after the page title
     if (pageTitleElement) {
       pageTitleElement.insertAdjacentElement("afterend", downloadAllContainer)
-      console.debug("Download button inserted after page title.")
+      //console.debug("Download button inserted after page title.")
     } else {
       document.body.prepend(downloadAllContainer)
-      console.debug("Download button inserted at the beginning of the body.")
+      //console.debug("Download button inserted at the beginning of the body.")
     }
 
     // Create a floating action button container
@@ -60,7 +67,7 @@ if (typeof init === "undefined") {
             </button>
         `
     document.body.appendChild(fabContainer)
-    console.debug("Floating action buttons created.")
+    //console.debug("Floating action buttons created.")
 
     // Create file selector modal
     const fileSelector = document.createElement("div")
@@ -123,7 +130,7 @@ if (typeof init === "undefined") {
       });
     
       sectionFiles[sectionTitle] = filesInSection;
-      console.debug(`Files collected for section: ${sectionTitle}`, filesInSection);
+      //console.debug(`Files collected for section: ${sectionTitle}`, filesInSection);
     });
 
     // Function to fetch folder contents
@@ -153,10 +160,10 @@ if (typeof init === "undefined") {
             files: folderFiles,
           });
     
-          console.debug(`Files collected from folder: ${folder.folderName}`, folderFiles);
+          //console.debug(`Files collected from folder: ${folder.folderName}`, folderFiles);
         })
         .catch((error) => {
-          console.error(`Failed to fetch folder contents for ${folder.folderName}:`, error);
+          //console.error(`Failed to fetch folder contents for ${folder.folderName}:`, error);
         });
     }
 
@@ -389,41 +396,41 @@ if (typeof init === "undefined") {
           },
           (response) => {
             if (response.success) {
-              console.debug("Download initiated:", response)
+              //console.debug("Download initiated:", response)
             } else {
-              console.error("Failed to initiate download:", response.error)
+              //console.error("Failed to initiate download:", response.error)
               alert(`Failed to download: ${response.error}`)
             }
           },
         )
       } else {
-        console.error("Chrome runtime is not available.")
+        //console.error("Chrome runtime is not available.")
         alert("Chrome runtime is not available. Please ensure the extension is properly loaded.")
       }
     }    
 
     // Add click event to the "Download All" button (top)
     document.getElementById("downloadAllTopBtn").addEventListener("click", () => {
-      console.debug("Download All button (top) clicked.")
+      //console.debug("Download All button (top) clicked.")
       showFileSelector()
     })
 
     // Add click event to the "Download All" button (FAB)
     document.getElementById("downloadAllFab").addEventListener("click", () => {
-      console.debug("Download All button (FAB) clicked.")
+      //console.debug("Download All button (FAB) clicked.")
       showFileSelector()
     })
 
     // Add click event to the "Settings" button
     document.getElementById("downloadSettingsFab").addEventListener("click", () => {
-      console.debug("Settings button clicked.")
+      //console.debug("Settings button clicked.")
       // Ensure chrome is defined
       if (typeof chrome !== "undefined" && chrome.runtime) {
         chrome.runtime.sendMessage({
           action: "open_settings",
         })
       } else {
-        console.error("Chrome runtime is not available.")
+        //console.error("Chrome runtime is not available.")
         alert("Chrome runtime is not available. Please ensure the extension is properly loaded.")
       }
     })

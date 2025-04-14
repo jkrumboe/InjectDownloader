@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
       storage: {
         sync: {
           get: (keys, callback) => {
-            console.warn("chrome.storage.sync.get is not available. Using mock data.")
+            //console.warn("chrome.storage.sync.get is not available. Using mock data.")
             const mockData = {
               settings: {
                 defaultDownloadPath: "",
@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
             callback(mockData)
           },
           set: (items, callback) => {
-            console.warn("chrome.storage.sync.set is not available. Data will not be saved.")
+            //console.warn("chrome.storage.sync.set is not available. Data will not be saved.")
             if (callback) {
               callback()
             }

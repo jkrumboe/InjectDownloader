@@ -1,505 +1,522 @@
+/* Define color variables */
+:root {
+    --primary-color: #2B6581;
+    --primary-hover-color: #1A3E4F;
+    --secondary-color: #1e475c;
+    --secondary-hover-color: #347c9e;
+    --background-color: #252525;
+    --border-color: #3a3a3a;
+    --text-color: white;
+    --tooltip-background-color: #333;
+    --tooltip-text-color: white;
+    --file-item-background-color: rgba(0,0,0,0.1);
+    --file-item-hover-background-color: rgba(255,255,255,0.03);
+    --overlay-background-color: rgba(0,0,0,0.6);
+}
+
+/* General Styles */
+span.page-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
 
 /* Main Button Styles */
-.learnweb-downloader-top-button {
-margin: 15px 0;
-text-align: right;
-}
-
 .learnweb-downloader-fab-container {
-position: fixed;
-bottom: 20px;
-right: 20px;
-z-index: 9999;
-display: flex;
-flex-direction: column;
-gap: 10px;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 .learnweb-downloader-fab {
-width: 56px;
-height: 56px;
-border-radius: 50%;
-background-color: #2B6581;
-color: white;
-display: flex;
-align-items: center;
-justify-content: center;
-box-shadow: 0 3px 5px rgba(0,0,0,0.3);
-cursor: pointer;
-transition: all 0.3s;
-border: none;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 3px 5px rgba(0,0,0,0.3);
+    cursor: pointer;
+    transition: all 0.3s;
+    border: none;
 }
 .learnweb-downloader-fab:hover {
-background-color: #1A3E4F;
-transform: scale(1.05);
+    background-color: var(--primary-hover-color);
+    transform: scale(1.05);
 }
 .learnweb-downloader-fab-tooltip {
-position: absolute;
-right: 70px;
-background-color: #333;
-color: white;
-padding: 5px 10px;
-border-radius: 4px;
-font-size: 12px;
-opacity: 0;
-transition: opacity 0.3s;
-pointer-events: none;
-white-space: nowrap;
+    position: absolute;
+    right: 70px;
+    background-color: var(--tooltip-background-color);
+    color: var(--tooltip-text-color);
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+    white-space: nowrap;
 }
 .learnweb-downloader-fab:hover .learnweb-downloader-fab-tooltip {
-opacity: 1;
+    opacity: 1;
 }
 
 .learnweb-downloader-top-button button {
-background-color: #2B6581;
-color: white;
-border: none;
-border-radius: 6px;
-padding: 10px 18px;
-font-size: 14px;
-cursor: pointer;
-display: inline-flex;
-align-items: center;
-gap: 8px;
-transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    border: none;
+    border-radius: 6px;
+    padding: 10px 18px;
+    font-size: 14px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .learnweb-downloader-top-button button:hover {
-background-color: #1A3E4F;
-box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-transform: translateY(-1px);
+    background-color: var(--secondary-hover-color);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    transform: translateY(-1px);
 }
 
 .learnweb-downloader-top-button button:active {
-transform: translateY(0);
+    transform: translateY(0);
 }
 
 /* File Selector Modal */
 .learnweb-downloader-file-selector {
-position: fixed;
-top: 50%;
-left: 50%;
-transform: translate(-50%, -50%) scale(0.95);
-background-color: #252525;
-border-radius: 16px;
-box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
-padding: 24px;
-z-index: 10001;
-width: 90%;
-height: 55vh;
-max-width: 700px;
-max-height: 80vh;
-display: none;
-flex-direction: column;
-opacity: 0;
-transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-border: 1px solid #3a3a3a;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.95);
+    background-color: var(--background-color);
+    border-radius: 16px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+    padding: 24px;
+    z-index: 10001;
+    width: 90%;
+    height: 55vh;
+    max-width: 700px;
+    max-height: 80vh;
+    display: none;
+    flex-direction: column;
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid var(--border-color);
 }
 
 .learnweb-downloader-file-selector.active {
-display: flex;
-opacity: 1;
-transform: translate(-50%, -50%) scale(1);
+    display: flex;
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
 }
 
 /* Header */
 .learnweb-downloader-file-selector-header {
-display: flex;
-justify-content: space-between;
-align-items: center;
-margin-bottom: 20px;
-padding-bottom: 16px;
-border-bottom: 1px solid #3a3a3a;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border-color);
 }
 
 .learnweb-downloader-file-selector-title {
-font-weight: 600;
-font-size: 22px;
-color: white;
-display: flex;
-align-items: center;
-gap: 10px;
+    font-weight: 600;
+    font-size: 22px;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .learnweb-downloader-file-selector-title svg {
-width: 20px;
-height: 20px;
+    width: 20px;
+    height: 20px;
 }
 
 .learnweb-downloader-file-selector-close {
-background: none;
-border: none;
-cursor: pointer;
-color: #888;
-padding: 4px;
-font-size: 24px;
-line-height: 1;
-transition: all 0.2s;
-border-radius: 4px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #888;
+    padding: 4px;
+    font-size: 24px;
+    line-height: 1;
+    transition: all 0.2s;
+    border-radius: 4px;
 }
 
 .learnweb-downloader-file-selector-close:hover {
-color: white;
-background-color: rgba(255,255,255,0.1);
+    color: var(--text-color);
+    background-color: rgba(255,255,255,0.1);
 }
 
 /* Content Area */
 .learnweb-downloader-file-selector-content {
-height: 100%;
-overflow-y: auto;
-max-height: calc(70vh - 180px);
-padding-right: 12px;
-margin-bottom: 20px;
-scrollbar-width: thin;
-scrollbar-color: #3a3a3a #252525;
+    height: 100%;
+    overflow-y: auto;
+    max-height: calc(70vh - 180px);
+    padding-right: 12px;
+    margin-bottom: 20px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-color) var(--background-color);
 }
 
 .learnweb-downloader-file-selector-content::-webkit-scrollbar {
-width: 8px;
+    width: 8px;
 }
 
 .learnweb-downloader-file-selector-content::-webkit-scrollbar-track {
-background: #252525;
-border-radius: 4px;
+    background: var(--background-color);
+    border-radius: 4px;
 }
 
 .learnweb-downloader-file-selector-content::-webkit-scrollbar-thumb {
-background-color: #3a3a3a;
-border-radius: 4px;
+    background-color: var(--border-color);
+    border-radius: 4px;
 }
 
 /* Sections */
 .learnweb-downloader-file-selector-section {
-margin-bottom: 16px;
-background-color: #2e2e2e;
-border-radius: 10px;
-padding: 0;
-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-border: 1px solid #3a3a3a;
+    margin-bottom: 16px;
+    background-color: #2e2e2e;
+    border-radius: 10px;
+    padding: 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--border-color);
 }
 
 .learnweb-downloader-file-selector-section-header {
-display: flex;
-align-items: center;
-justify-content: space-between;
-padding: 14px 16px;
-font-weight: 500;
-color: white;
-cursor: pointer;
-transition: background-color 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+    font-weight: 500;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: background-color 0.2s;
 }
 
 .learnweb-downloader-file-selector-section-header:hover {
-background-color: rgba(255,255,255,0.05);
+    background-color: rgba(255,255,255,0.05);
 }
 
 .learnweb-downloader-file-selector-section-title {
-display: flex;
-align-items: center;
-gap: 10px;
-font-size: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
 }
 
 .learnweb-downloader-file-selector-section-title svg {
-width: 18px;
-height: 18px;
-color: #2B6581;
+    width: 18px;
+    height: 18px;
+    color: var(--primary-color);
 }
 
 .learnweb-downloader-file-selector-section-toggle {
-color: #888;
-transition: transform 0.3s ease;
+    color: #888;
+    transition: transform 0.3s ease;
 }
 
 .learnweb-downloader-file-selector-section-header.collapsed .learnweb-downloader-file-selector-section-toggle {
-transform: rotate(-90deg);
+    transform: rotate(-90deg);
 }
 
 .learnweb-downloader-file-selector-section-content {
-max-height: 1000px;
-align-items: center;
-transition: max-height 0.3s ease, opacity 0.2s ease;
-opacity: 1;
-overflow-y: scroll;
+    max-height: 1000px;
+    align-items: center;
+    transition: max-height 0.3s ease, opacity 0.2s ease;
+    opacity: 1;
 }
 
 .learnweb-downloader-file-selector-section-content.collapsed {
-max-height: 0;
-opacity: 0;
+    max-height: 0;
+    opacity: 0;
 }
 
 .learnweb-downloader-file-selector-folder {
-width: 90%;
-margin-left: 5%;
-margin-right: 5%;
-margin-top: 10px;
-margin-bottom: 10px;
-padding: 10px;
-align-items: center;
-background-color:rgb(36, 36, 36);
-border-radius: 8px;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    align-items: center;
+    background-color:rgb(36, 36, 36);
+    border-radius: 8px;
 }
 
 .learnweb-downloader-file-selector-folder-header {
-display: flex;
-align-items: center;
-background-color:rgb(36, 36, 36);
-justify-content: space-between;
-cursor: pointer;
+    display: flex;
+    align-items: center;
+    background-color:rgb(36, 36, 36);
+    justify-content: space-between;
+    cursor: pointer;
 }
 
 .learnweb-downloader-file-selector-folder-header.collapsed {
-background-color: rgba(36, 36, 36);
+    background-color: rgba(36, 36, 36);
 }
 
 .learnweb-downloader-file-selector-folder-content {
-margin-top: 10px;
-padding-left: 20px;
-max-height: 1000px;
-transition: max-height 0.3s ease, opacity 0.2s ease;
-opacity: 1;
+    margin-top: 10px;
+    padding-left: 20px;
+    max-height: 1000px;
+    transition: max-height 0.3s ease, opacity 0.2s ease;
+    opacity: 1;
 }
 
 .learnweb-downloader-file-selector-folder-content.collapsed {
-max-height: 0;
-opacity: 0;
+    max-height: 0;
+    opacity: 0;
 }
 
 /* File Items */
 .learnweb-downloader-file-selector-file {
-display: flex;
-align-items: center;
-padding: 12px 16px;
-background-color: rgba(0,0,0,0.1);
-transition: background-color 0.2s;
-border-top: 1px solid #3a3a3a;
-overflow-y: hidden;
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    background-color: var(--file-item-background-color);
+    transition: background-color 0.2s;
+    border-top: 1px solid var(--border-color);
+    overflow-y: hidden;
 }
 
 .learnweb-downloader-file-selector-file:hover {
-background-color: rgba(255,255,255,0.03);
+    background-color: var(--file-item-hover-background-color);
 }
 
 .learnweb-downloader-file-selector-file:last-child {
-border-bottom-left-radius: 8px;
-border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
 }
 
 .learnweb-downloader-file-checkbox {
-appearance: none;
--webkit-appearance: none;
-width: 18px;
-height: 18px;
-border: 2px solid #555;
-border-radius: 4px;
-margin-right: 12px;
-cursor: pointer;
-position: relative;
-transition: all 0.2s;
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #555;
+    border-radius: 4px;
+    margin-right: 12px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s;
 }
 
 .learnweb-downloader-file-checkbox:checked {
-background-color: #2B6581;
-border-color: #2B6581;
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
 }
 
 .learnweb-downloader-file-checkbox:checked::after {
-content: "✓";
-position: absolute;
-color: white;
-font-size: 12px;
-top: 50%;
-left: 50%;
-transform: translate(-50%, -50%);
+    content: "✓";
+    position: absolute;
+    color: var(--text-color);
+    font-size: 12px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .learnweb-downloader-file-info {
-flex: 1;
-display: flex;
-flex-direction: column;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .learnweb-downloader-file-name {
-color: white;
-font-size: 14px;
-margin-bottom: 4px;
+    color: var(--text-color);
+    font-size: 14px;
+    margin-bottom: 4px;
 }
 
 .learnweb-downloader-file-meta {
-color: #888;
-font-size: 12px;
-display: flex;
-gap: 12px;
+    color: #888;
+    font-size: 12px;
+    display: flex;
+    gap: 12px;
 }
 
 .learnweb-downloader-file-icon {
-margin-right: 12px;
-color: #888;
+    margin-right: 12px;
+    color: #888;
 }
 
 /* Footer Actions */
 .learnweb-downloader-file-selector-actions {
-display: flex;
-justify-content: space-between;
-align-items: center;
-padding-top: 16px;
-border-top: 1px solid #3a3a3a;
-bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-color);
+    bottom: 0;
 }
 
 .learnweb-downloader-file-selector-actions-top {
-display: flex;
-flex-direction: row;
-width: auto;
-gap: 8px;
+    display: flex;
+    flex-direction: row;
+    width: auto;
+    gap: 8px;
 }
 
 .learnweb-downloader-file-selector-select-all {
-background-color: #2B6581;
-color: white;
-cursor: pointer;
-padding: 8px 16px;
-font-size: 14px;
-border-radius: 6px;
-transition: all 0.2s;
-display: flex;
-align-items: center;
-gap: 8px;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    cursor: pointer;
+    padding: 8px 16px;
+    font-size: 14px;
+    border-radius: 6px;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .learnweb-downloader-file-selector-select-all:hover {
-background-color: #1A3E4F;
+    background-color: var(--primary-hover-color);
 }
 
 .learnweb-downloader-file-selector-download {
-background-color: #2B6581;
-color: white;
-border: none;
-border-radius: 6px;
-padding: 10px 24px;
-cursor: pointer;
-font-size: 14px;
-font-weight: 500;
-transition: all 0.2s;
-display: flex;
-align-items: center;
-gap: 8px;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    border: none;
+    border-radius: 6px;
+    padding: 10px 24px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .learnweb-downloader-file-selector-download:hover {
-background-color: #1A3E4F;
-box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    background-color: var(--primary-hover-color);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
 
 .learnweb-downloader-file-selector-download:disabled {
-background-color: #3a3a3a;
-color: #666;
-cursor: not-allowed;
+    background-color: #3a3a3a;
+    color: #666;
+    cursor: not-allowed;
 }
 
 /* Overlay */
 .learnweb-downloader-overlay {
-position: fixed;
-top: 0;
-left: 0;
-right: 0;
-bottom: 0;
-background-color: rgba(0,0,0,0.6);
-z-index: 10000;
-display: none;
-backdrop-filter: blur(4px);
-opacity: 0;
-transition: opacity 0.3s ease;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--overlay-background-color);
+    z-index: 10000;
+    display: none;
+    backdrop-filter: blur(4px);
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
 .learnweb-downloader-overlay.active {
-display: block;
-opacity: 1;
+    display: block;
+    opacity: 1;
 }
 
 /* Empty State */
 .learnweb-downloader-empty-state {
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: center;
-padding: 40px 20px;
-color: #666;
-text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    color: #666;
+    text-align: center;
 }
 
 .learnweb-downloader-empty-state svg {
-width: 48px;
-height: 48px;
-margin-bottom: 16px;
-color: #3a3a3a;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 16px;
+    color: #3a3a3a;
 }
 
 .learnweb-downloader-empty-state p {
-margin: 0;
-font-size: 14px;
+    margin: 0;
+    font-size: 14px;
 }
 
 /* Add to your existing CSS */
 .learnweb-downloader-file-selector-folder {
-position: relative;
-z-index: 1;
+    position: relative;
+    z-index: 1;
 }
 
 .learnweb-downloader-file-selector-folder.active {
-z-index: 2;
+    z-index: 2;
 }
 
 /* Make collapsed folders visually distinct but still accessible */
 .learnweb-downloader-file-selector-folder-header.collapsed {
-border-radius: 8px;
+    border-radius: 8px;
 }
 
 .learnweb-downloader-file-selector-folder-content.collapsed {
-display: none;
+    display: none;
 }
 
 /* Update the transition for better collapsed state */
 .learnweb-downloader-file-selector-folder-content {
-margin-top: 10px;
-padding-left: 20px;
-display: block;
+    margin-top: 10px;
+    padding-left: 20px;
+    display: block;
 }
 
 /* Change toggle icon rotation */
 .learnweb-downloader-file-selector-folder-header .toggle-icon {
-transition: transform 0.3s ease;
+    transition: transform 0.3s ease;
 }
 
 .learnweb-downloader-file-selector-folder-header.collapsed .toggle-icon {
-transform: rotate(-90deg);
+    transform: rotate(-90deg);
 }
 
 /* Responsive Adjustments */
 @media (max-width: 600px) {
-.learnweb-downloader-file-selector {
-    width: 95%;
-    padding: 16px;
-}
+    .learnweb-downloader-file-selector {
+        width: 95%;
+        padding: 16px;
+    }
 
-.learnweb-downloader-file-selector-title {
-    font-size: 18px;
-}
+    .learnweb-downloader-file-selector-title {
+        font-size: 18px;
+    }
 
-.learnweb-downloader-file-selector-actions-top {
-    flex-direction: column-reverse;
-    gap: 12px;
-}
+    .learnweb-downloader-file-selector-actions-top {
+        flex-direction: column-reverse;
+        gap: 12px;
+    }
 
-.learnweb-downloader-file-selector-actions {
-    flex-direction: column-reverse;
-    gap: 12px;
-    bottom: 0;
-}
+    .learnweb-downloader-file-selector-actions {
+        flex-direction: column-reverse;
+        gap: 12px;
+        bottom: 0;
+    }
 
-.learnweb-downloader-file-selector-select-all,
-.learnweb-downloader-file-selector-download {
-    width: 100%;
-    justify-content: center;
-}
+    .learnweb-downloader-file-selector-select-all,
+    .learnweb-downloader-file-selector-download {
+        width: 100%;
+        justify-content: center;
+    }
 }

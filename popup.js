@@ -4,24 +4,24 @@ document.addEventListener("DOMContentLoaded", () => {
       window.chrome = {
         tabs: {
           query: (queryInfo, callback) => {
-            console.warn("chrome.tabs.query is not available. Using mock data.")
+            //console.warn("chrome.tabs.query is not available. Using mock data.")
             callback([{ id: 1, url: "https://www.uni-muenster.de/LearnWeb/learnweb2/course/view.php?id=123" }])
           },
           sendMessage: (tabId, message, callback) => {
-            console.warn("chrome.tabs.sendMessage is not available.")
+            //console.warn("chrome.tabs.sendMessage is not available.")
             if (callback) callback()
           },
         },
         runtime: {
           openOptionsPage: () => {
-            console.warn("chrome.runtime.openOptionsPage is not available.")
+            //console.warn("chrome.runtime.openOptionsPage is not available.")
             window.open("options.html", "_blank")
           },
         },
         storage: {
           local: {
             get: (keys, callback) => {
-              console.warn("chrome.storage.local.get is not available. Using mock data.")
+              //console.warn("chrome.storage.local.get is not available. Using mock data.")
               const mockData = {
                 downloadHistory: [
                   {

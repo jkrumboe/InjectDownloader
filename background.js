@@ -32,7 +32,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       // Get settings to check configuration options
       chrome.storage.sync.get("settings", (data) => {
         const settings = data.settings || {}
-        console.log("Settings loaded:", settings)
+        //console.log("Settings loaded:", settings)
         
         // Only check if we should ask before download
         const askBeforeDownload = settings.askBeforeDownload || false
@@ -97,7 +97,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                   total: totalDownloads,
                   percentage: Math.round((completedDownloads / totalDownloads) * 100),
                 })
-                console.error(`All download attempts failed for ${originalFilename}`)
+                //console.error(`All download attempts failed for ${originalFilename}`)
               },
             })
           })
@@ -191,7 +191,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
           totalFiles: message.files.length,
         })
       } catch (error) {
-        console.error("Error in download_files handler:", error)
+        //console.error("Error in download_files handler:", error)
         sendResponse({ success: false, error: error.message })
       }
       return true
@@ -226,7 +226,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     // Sanitize the path for Chrome's downloads API
     const safePath = sanitizeDownloadPath(path);
     
-    console.log(`Attempting to download: ${url} to ${safePath}`);
+    //console.log(`Attempting to download: ${url} to ${safePath}`);
     
     chrome.downloads.download(
       {
@@ -236,10 +236,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       },
       (downloadId) => {
         if (chrome.runtime.lastError) {
-          console.error(`Download failed for ${safePath}:`, chrome.runtime.lastError)
+          //console.error(`Download failed for ${safePath}:`, chrome.runtime.lastError)
           if (fallbacks.length > 0) {
             const nextPath = sanitizeDownloadPath(fallbacks.shift());
-            console.log(`Trying fallback path: ${nextPath}`)
+            //console.log(`Trying fallback path: ${nextPath}`)
             tryDownload({
               url,
               path: nextPath,
@@ -252,7 +252,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             if (onAllFailed) onAllFailed()
           }
         } else if (downloadId) {
-          console.log("Download started, ID:", downloadId, "Path:", safePath)
+          //console.log("Download started, ID:", downloadId, "Path:", safePath)
           
           // We need to get the actual download path
           // This might be different from what we specified if the user chooses a different location
@@ -310,7 +310,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       const truncated = sanitized.length > maxLength ? sanitized.substring(0, maxLength) : sanitized
       return truncated || "unnamed"
     } catch (error) {
-      console.error("Error sanitizing filename:", error)
+      //console.error("Error sanitizing filename:", error)
       return `unnamed_${Date.now()}`
     }
   }
@@ -362,7 +362,7 @@ function sanitizeDownloadPath(path) {
   // Remove leading slash if present
   sanitized = sanitized.replace(/^\//, '');
   
-  console.log(`Sanitized path: ${path} → ${sanitized}`);
+  //console.log(`Sanitized path: ${path} → ${sanitized}`);
   
   return sanitized;
 }
