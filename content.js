@@ -224,7 +224,7 @@ if (typeof init === "undefined") {
           folderElement.className = "learnweb-downloader-file-selector-folder";
 
           const folderHeader = document.createElement("div");
-          folderHeader.className = "learnweb-downloader-file-selector-folder-header collapsed"; // Start collapsed
+          folderHeader.className = "learnweb-downloader-file-selector-folder-header collapsed";
 
           const folderCheckbox = document.createElement("input");
           folderCheckbox.type = "checkbox";
@@ -256,7 +256,7 @@ if (typeof init === "undefined") {
 
           // Create a container for the files in this folder
           const folderContent = document.createElement("div");
-          folderContent.className = "learnweb-downloader-file-selector-folder-content collapsed"; // Start collapsed
+          folderContent.className = "learnweb-downloader-file-selector-folder-content collapsed";
 
           // Add files to the folder content
           item.files.forEach((file) => {
@@ -269,7 +269,7 @@ if (typeof init === "undefined") {
             fileCheckbox.dataset.url = file.url;
             fileCheckbox.dataset.filename = file.filename;
             fileCheckbox.dataset.section = file.section;
-            fileCheckbox.dataset.folder = file.folder || ""; // Include folder info if available
+            fileCheckbox.dataset.folder = file.folder || "";
             fileCheckbox.checked = true;
 
             const fileLabel = document.createElement("span");
@@ -409,6 +409,11 @@ if (typeof init === "undefined") {
       }
     }    
 
+    // Evenlisteners
+
+
+    // Clickevent
+
     // Add click event to the "Download All" button (top)
     document.getElementById("downloadAllTopBtn").addEventListener("click", () => {
       //console.debug("Download All button (top) clicked.")
@@ -443,6 +448,10 @@ if (typeof init === "undefined") {
 
     // Add click event to the "Select All" button
     document.getElementById("selectAllFiles").addEventListener("click", () => {
+      // enable the download button
+      downloadButtonCheck.disabled = false;
+
+      // check all checkboxes
       const checkboxes = document.querySelectorAll(".learnweb-downloader-file-checkbox")
       checkboxes.forEach((checkbox) => {
         checkbox.checked = true
@@ -452,6 +461,10 @@ if (typeof init === "undefined") {
 
     // Add click event to the "Deselect All" button
     document.getElementById("deselectAllFiles").addEventListener("click", () => {
+      // disable the download button
+      downloadButtonCheck.disabled = true;
+
+      // uncheck all checkboxes
       const checkboxes = document.querySelectorAll(".learnweb-downloader-file-checkbox")
       checkboxes.forEach((checkbox) => {
         checkbox.checked = false
@@ -461,6 +474,20 @@ if (typeof init === "undefined") {
 
     // Add click event to the "Download Selected" button
     document.getElementById("downloadSelectedFiles").addEventListener("click", downloadSelectedFiles)
+    
+    // Add event listener to disable the "Download Selected" button when no files are selected
+    const downloadButtonCheck = document.getElementById("downloadSelectedFiles");
+    
+
+    document.addEventListener("change", (event) => {
+      if (event.target.classList.contains("learnweb-downloader-file-checkbox")) {
+        const anySelected = document.querySelector(
+          '.learnweb-downloader-file-selector-file input[type="checkbox"]:checked',
+        );
+        downloadButtonCheck.disabled = !anySelected; // Disable if no checkboxes are selected
+      }
+    });   
+    
   }
   init()
 }
