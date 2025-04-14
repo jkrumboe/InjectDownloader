@@ -36,6 +36,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         
         // Only check if we should ask before download
         const askBeforeDownload = settings.askBeforeDownload || false
+
+        // Retrieve the createFolderStructure setting from the settings
+        const createFolderStructure = settings.createFolderStructure || false;
         
         // Iterate over each section and download each file with simplified path structure
         Object.keys(filesBySection).forEach((section) => {
@@ -60,8 +63,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
             downloadTracking[originalFilename] = { status: "pending", progress: 0 }
 
-            // Simplified path structure without custom download paths
-            const mainPath = `${mainFolderName}/${sectionFolder}/${finalFilename}`
+            // Simplified path structure with folder structure based on the setting
+            const mainPath = createFolderStructure
+              ? `${mainFolderName}/${sectionFolder}/${finalFilename}`
+              : `${mainFolderName}/${finalFilename}`;
             const fallbackPaths = [
               `${mainFolderName}/${finalFilename}`, 
               `${mainFolderName}/file_${Date.now()}.pdf`
@@ -102,10 +107,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             })
           })
         })
-      })
-      
-      // Rest of your existing download tracking code...
-  
+      })  
         // Listen for download progress and completion
         chrome.downloads.onChanged.addListener(function downloadListener(delta) {
           if (downloadIds.includes(delta.id)) {
@@ -213,13 +215,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     }
     return true
   })
-  
+
   /**
-   * Recursively attempts to download a file using fallback paths.
-   */
-  /**
- * Recursively attempts to download a file using fallback paths.
- */
+  * Recursively attempts to download a file using fallback paths.
+  */
   function tryDownload(options) {
     const { url, path, fallbacks = [], saveAs = false, onSuccess, onAllFailed } = options
     
