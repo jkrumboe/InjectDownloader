@@ -20,6 +20,10 @@ span.page-title {
     align-items: center;
     justify-content: center;
     text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--text-color);
+    margin-bottom: 20px;
 }
 
 /* Main Button Styles */
@@ -101,7 +105,7 @@ span.page-title {
     background-color: var(--background-color);
     border-radius: 16px;
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
-    padding: 24px;
+    padding: 32px;
     z-index: 10001;
     width: 90%;
     height: 55vh;
@@ -111,7 +115,7 @@ span.page-title {
     flex-direction: column;
     opacity: 0;
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    border: 1px solid var(--border-color);
+    border: 2px solid var(--primary-color);
 }
 
 .learnweb-downloader-file-selector.active {
@@ -188,23 +192,26 @@ span.page-title {
 
 /* Sections */
 .learnweb-downloader-file-selector-section {
-    margin-bottom: 16px;
-    background-color: #2e2e2e;
-    border-radius: 10px;
-    padding: 0;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    border: 1px solid var(--border-color);
+    margin-bottom: 24px;
+    background-color: #333;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border: 2px solid var(--primary-color);
 }
 
 .learnweb-downloader-file-selector-section-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 14px 16px;
+    padding: 16px;
     font-weight: 500;
     color: var(--text-color);
     cursor: pointer;
     transition: background-color 0.2s;
+    font-size: 16px;
+    font-weight: bold;
+    border-bottom: 2px solid var(--border-color);
 }
 
 .learnweb-downloader-file-selector-section-header:hover {
@@ -238,6 +245,9 @@ span.page-title {
     align-items: center;
     transition: max-height 0.3s ease, opacity 0.2s ease;
     opacity: 1;
+    padding: 16px;
+    background-color: #2a2a2a;
+    border-radius: 8px;
 }
 
 .learnweb-downloader-file-selector-section-content.collapsed {
@@ -257,6 +267,12 @@ span.page-title {
     align-items: center;
     background-color:rgb(36, 36, 36);
     border-radius: 8px;
+    position: relative;
+    z-index: 1;
+}
+
+.learnweb-downloader-file-selector-folder.active {
+    z-index: 2;
 }
 
 .learnweb-downloader-file-selector-folder-header {
@@ -269,6 +285,7 @@ span.page-title {
 
 .learnweb-downloader-file-selector-folder-header.collapsed {
     background-color: rgba(36, 36, 36);
+    border-radius: 8px;
 }
 
 .learnweb-downloader-file-selector-folder-content {
@@ -277,26 +294,32 @@ span.page-title {
     max-height: 1000px;
     transition: max-height 0.3s ease, opacity 0.2s ease;
     opacity: 1;
+    display: block;
 }
 
 .learnweb-downloader-file-selector-folder-content.collapsed {
     max-height: 0;
     opacity: 0;
+    display: none;
 }
 
 /* File Items */
 .learnweb-downloader-file-selector-file {
     display: flex;
     align-items: center;
-    padding: 12px 16px;
+    padding: 16px;
     background-color: var(--file-item-background-color);
     transition: background-color 0.2s;
     border-top: 1px solid var(--border-color);
     overflow-y: hidden;
+    margin: 8px 0;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
 }
 
 .learnweb-downloader-file-selector-file:hover {
     background-color: var(--file-item-hover-background-color);
+    border-color: var(--primary-color);
 }
 
 .learnweb-downloader-file-selector-file:last-child {
@@ -361,8 +384,8 @@ span.page-title {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-top: 16px;
-    border-top: 1px solid var(--border-color);
+    padding-top: 24px;
+    border-top: 2px solid var(--primary-color);
     bottom: 0;
 }
 
@@ -377,13 +400,14 @@ span.page-title {
     background-color: var(--primary-color);
     color: var(--text-color);
     cursor: pointer;
-    padding: 8px 16px;
-    font-size: 14px;
+    padding: 12px 20px;
+    font-size: 16px;
     border-radius: 6px;
     transition: all 0.2s;
     display: flex;
     align-items: center;
     gap: 8px;
+    border: 2px solid var(--primary-color);
 }
 
 .learnweb-downloader-file-selector-select-all:hover {
@@ -393,11 +417,11 @@ span.page-title {
 .learnweb-downloader-file-selector-download {
     background-color: var(--primary-color);
     color: var(--text-color);
-    border: none;
+    border: 2px solid var(--primary-color);
     border-radius: 6px;
-    padding: 10px 24px;
+    padding: 12px 20px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 500;
     transition: all 0.2s;
     display: flex;
