@@ -289,52 +289,26 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
    * Sanitizes a filename by removing or replacing invalid characters.
    */
   function sanitizeFilename(filename) {
-    if (!filename) return "unnamed"
+    if (!filename) return "unnamed";
     try {
-      const normalized = filename.normalize("NFD")
-      const sanitized = normalized
-        .replace(/[äÄ]/g, "ae")
-        .replace(/[öÖ]/g, "oe")
-        .replace(/[üÜ]/g, "ue")
-        .replace(/[ß]/g, "ss")
-        .replace(/[<>:"/\\|?*]+/g, "_")
-        .replace(/[\s]+/g, "_")
-        .replace(/[.,;]+/g, "_")
-        .replace(/[\u0000-\u001F\u007F-\u009F]/g, "_")
-        .replace(/[+]+/g, "_")
-        .replace(/_+/g, "_")
-        .replace(/^_|_$/g, "")
-        .replace(/[^\x00-\x7F]/g, "")
-      const maxLength = 40
-      const truncated = sanitized.length > maxLength ? sanitized.substring(0, maxLength) : sanitized
-      return truncated || "unnamed"
-    } catch (error) {
-      //console.error("Error sanitizing filename:", error)
-      return `unnamed_${Date.now()}`
-    }
-  }
-  
-  // Add this function to your background.js to handle file type detection
-  function detectFileType(url, filename) {
-    // Default to PDF if we can't determine
-    let extension = ".pdf"
-  
-    // Try to extract extension from filename first
-    const filenameMatch = filename.match(/\.([a-zA-Z0-9]+)$/)
-    if (filenameMatch) {
-      extension = filenameMatch[0].toLowerCase()
-    } else {
-      // Try to extract from URL
-      const urlMatch = url.match(/\.([a-zA-Z0-9]+)(\?|$)/)
-      if (urlMatch) {
-        extension = "." + urlMatch[1].toLowerCase()
-      }
-    }
-  
-    return extension
-  }
+        const normalized = filename.normalize("NFD");
+        const sanitized = normalized
+            .replace(/[äÄ]/g, "ae")
+            .replace(/[öÖ]/g, "oe")
+            .replace(/[üÜ]/g, "ue")
+            .replace(/[ß]/g, "ss")
+            .replace(/[<>:"/\\|?*]+/g, " ") // Replace invalid characters with spaces
+            .replace(/\s+/g, " ") // Replace multiple spaces with a single space
+            .replace(/[.,;]+/g, "") // Remove unnecessary punctuation
+            .replace(/^[\s]+|[\s]+$/g, ""); // Trim leading and trailing spaces
 
-  // Add this function before the tryDownload function:
+        const maxLength = 40;
+        const truncated = sanitized.length > maxLength ? sanitized.substring(0, maxLength) : sanitized;
+        return truncated || "unnamed";
+    } catch (error) {
+        return "unnamed";
+    }
+}
 
 /**
  * Sanitizes a download path for Chrome's downloads API.
@@ -364,4 +338,24 @@ function sanitizeDownloadPath(path) {
   //console.log(`Sanitized path: ${path} → ${sanitized}`);
   
   return sanitized;
+}
+
+// Add this function to your background.js to handle file type detection
+function detectFileType(url, filename) {
+  // Default to PDF if we can't determine
+  let extension = ".pdf"
+
+  // Try to extract extension from filename first
+  const filenameMatch = filename.match(/\.([a-zA-Z0-9]+)$/)
+  if (filenameMatch) {
+    extension = filenameMatch[0].toLowerCase()
+  } else {
+    // Try to extract from URL
+    const urlMatch = url.match(/\.([a-zA-Z0-9]+)(\?|$)/)
+    if (urlMatch) {
+      extension = "." + urlMatch[1].toLowerCase()
+    }
+  }
+
+  return extension
 }
