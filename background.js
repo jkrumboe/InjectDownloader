@@ -1,3 +1,7 @@
+// MIT License
+// Copyright (c) 2025 Justin Krumbömer
+// See LICENSE file in the project root for full license information.
+
 // Modify the download_files handler in your background.js
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === "download_files") {

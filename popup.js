@@ -1,3 +1,7 @@
+// MIT License
+// Copyright (c) 2025 Justin Krumbömer
+// See LICENSE file in the project root for full license information.
+
 document.addEventListener("DOMContentLoaded", () => {
     // Check if chrome is defined, if not, define a mock object (for testing purposes)
     if (typeof chrome === "undefined" || !chrome.tabs) {

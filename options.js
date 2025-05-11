@@ -1,3 +1,7 @@
+// MIT License
+// Copyright (c) 2025 Justin Krumbömer
+// See LICENSE file in the project root for full license information.
+
 document.getElementById("saveSettings").addEventListener("click", () => {
   let downloadPath = "";
  
