@@ -7,7 +7,7 @@ A Chrome extension for efficiently downloading course materials from LearnWeb (U
 1. Clone this repository or download the ZIP file.
 
     ```sh
-    git clone https://github.com/Beerejustin/Moodle-Parser.git
+    git clone https://github.com/jkrumboe/InjectDownloader.git
     ```
 
 2. Open your browser and navigate to [chrome://extensions/](http://_vscodecontentref_/1) or your browsers extensions location.
