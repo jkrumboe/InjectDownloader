@@ -10,7 +10,7 @@ A Chrome extension for efficiently downloading course materials from LearnWeb (U
     git clone https://github.com/Beerejustin/Moodle-Parser.git
     ```
 
-2. Open your browser and navigate to [chrome://extensions/](http://_vscodecontentref_/1) or your browsers extentions location.
+2. Open your browser and navigate to [chrome://extensions/](http://_vscodecontentref_/1) or your browsers extensions location.
 
 3. Enable "Developer mode".
 
@@ -26,7 +26,7 @@ A Chrome extension for efficiently downloading course materials from LearnWeb (U
 - **Bulk Download** - Download multiple selected files or entire sections with fewer clicks.
 - **Organized by Sections**: Files are grouped by their respective sections for easy navigation.
 - **Folder Support** - Handles nested folder structures within course sections
-- **Download History** - Tracks your recent downloads for quick reference (Last 5 downkloads)
+- **Download History** - Tracks your recent downloads for quick reference (Last 5 downloads)
 
 ## Contributing
 
